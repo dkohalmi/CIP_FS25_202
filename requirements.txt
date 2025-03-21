@@ -1,0 +1,7 @@
+pandas
+selenium
+matplotlib
+pandas
+plotly
+seaborn
+streamlit
