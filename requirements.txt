@@ -1,7 +1,11 @@
-pandas
-selenium
+pandas~=2.2.3
+selenium~=4.30.0
 matplotlib
 pandas
 plotly
 seaborn
 streamlit
+
+beautifulsoup4~=4.13.3
+webdriver-manager~=4.0.2
+tqdm
