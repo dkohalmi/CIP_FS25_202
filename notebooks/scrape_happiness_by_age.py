@@ -37,4 +37,4 @@ driver.quit()
 df_happiness_by_age = pd.DataFrame(list_happiness_by_age, columns= headers)
 print(df_happiness_by_age)
 
-df_happiness_by_age.to_csv("../data/df_happiness_by_age.csv", index= False)
+df_happiness_by_age.to_csv("../data/happiness_by_age.csv", index= False)
