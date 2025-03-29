@@ -4,7 +4,7 @@
 #############################################
 #
 # This Python script cleans the data that was scraped from the "Country" section of the Better Life Index 
-# webpage by the scrape.betterlife.ipynb Jupyter Notebook or scrape.betterlife.py script.
+# webpage  ("https://www.oecdbetterlifeindex.org/#/11111111111") by the scrape.betterlife.ipynb Jupyter Notebook or scrape.betterlife.py script.
 # This file is the script version of the clean.betterlife.ipynb Notebook.
 #
 # The scraped data (raw data) was saved into the "/data/raw folder as betterlife_index.raw.csv". 
