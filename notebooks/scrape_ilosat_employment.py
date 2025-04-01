@@ -1,10 +1,16 @@
-"""\
-scrape happiness data from
-https://ilostat.ilo.org/topics/labour-productivity/
-In the 'iframe, find all values
+"""
+This script scrapes employment data from the ILOSTAT topic page:
+https://ilostat.ilo.org/topics/employment/
+
+This script uses Selenium to interact with an iframe-based datawrapper chart,
+clicks the "Show more" button if present, and extracts country-level employment
+data from the HTML table using BeautifulSoup.
+
+The final data is saved as a CSV file in the /data folder.
+The robots.txt on this website was checked to ensure that information scrapped was allowed.
 
 authors:    Jade Bullock
-date:       21.03.2025
+date:       23.03.2025
 """
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -24,12 +30,12 @@ driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install())
 wait = WebDriverWait(driver, 15)
 
 # Load main page
-url = "https://ilostat.ilo.org/topics/labour-productivity/"
+url = "https://ilostat.ilo.org/topics/employment/"
 driver.get(url)
 
 # Wait for iframe to load
 try:
-    iframe = wait.until(EC.presence_of_element_located((By.ID, "datawrapper-chart-pUHnK")))
+    iframe = wait.until(EC.presence_of_element_located((By.ID, "datawrapper-chart-HI0nK")))
     driver.switch_to.frame(iframe)
     print("Switched into iframe.")
 except Exception as e:
@@ -70,14 +76,14 @@ for row in rows:
 driver.switch_to.default_content()
 driver.quit()
 
+# Save to CSV
 #want file to go to data file
-data_folder = "../data"
-os.makedirs(data_folder, exist_ok=True)
+os.makedirs("data", exist_ok=True)
 
 # Save to CSV
 if data:
-    ilosat_labour = pd.DataFrame(data, columns=["Country", "Labour Productivity (USD/hour)"])
-    ilosat_labour.to_csv(f"{data_folder}/labour_productivity.csv", index=False)
-    print("Data saved to ..data/labour_productivity.csv")
+    ilosat_employment = pd.DataFrame(data, columns=["Country", "Employment to Population ratio"])
+    ilosat_labour.to_csv("data/employment.csv", index=False)
+    print("Data saved to data/employment.csv")
 else:
     print("No data found.")

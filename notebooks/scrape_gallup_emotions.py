@@ -1,8 +1,12 @@
-"""\
-scrape happiness data from
-https://news.gallup.com/interactives/248240/global-emotions.aspx.
-https://www.gallup.com/analytics/356996/gallup-law-and-order-research-center.aspx?thank-you-report-form=1
-In the 'tr'-tags of the table, find all values of the 'span' - tag.
+"""
+Scrapes emotional response data from the Gallup Global Emotions interactive map:
+https://news.gallup.com/interactives/248240/global-emotions.aspx
+
+For each emotion, the script:
+- Clicks the corresponding toggle
+- Waits for the data table to update
+- Extracts data per country (Yes / No / Don't Know)
+The robots.txt on this website was checked to ensure that information scrapped was allowed.
 
 authors:    Jade Bullock
 date:       21.03.2025
@@ -103,6 +107,6 @@ gallup_emotions_df = df.drop_duplicates(subset=["Emotion", "Country"])
 os.makedirs("../data", exist_ok=True)
 
 # Save to data folder one level up
-gallup_emotions_df.to_csv("../data/gallup_emotions.csv", index=False)
+gallup_emotions_df.to_csv("../data/gallup_emotions_raw.csv", index=False)
 
 print("Data saved to ../data/gallup_emotions.csv")
