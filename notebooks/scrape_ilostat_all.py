@@ -76,7 +76,7 @@ class ILOScraper:
             header_cells = thead.find_all("th")
             headers = [cell.get_text(strip=True) for cell in header_cells]
         else:
-            print("⚠️ No <thead> found — using default headers.")
+            print("️ No <thead> found — using default headers.")
             headers = ["Country", {topic}]
 
         # Extract rows from <tbody>

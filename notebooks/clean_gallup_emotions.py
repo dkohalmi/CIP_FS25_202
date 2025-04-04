@@ -69,7 +69,7 @@ def clean_gallup_emotions():
     # Create composite column names like 'anger_yes'
     reshaped["Column"] = (
         reshaped["Emotion"].str.lower().str.replace(" ", "_") + "_" +
-        reshaped["Response"].str.lower().str.replace(" ", "_")
+        reshaped["Response"].str.lower().str.replace(" ", "_") + "%"
     )
 
     # Pivot so that each row is Country with all emotion responses as columns (country only once in the row)
