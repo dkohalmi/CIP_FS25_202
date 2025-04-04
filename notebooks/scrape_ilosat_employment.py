@@ -1,6 +1,6 @@
 """
 This script scrapes employment data from the ILOSTAT topic page:
-https://ilostat.ilo.org/topics/employment/
+https://ilostat.ilo.org/topics/employment/  #has been updated/changed 2/4/25,
 
 This script uses Selenium to interact with an iframe-based datawrapper chart,
 clicks the "Show more" button if present, and extracts country-level employment
@@ -11,6 +11,9 @@ The robots.txt on this website was checked to ensure that information scrapped w
 
 authors:    Jade Bullock
 date:       23.03.2025
+
+!!Important Note!! Information on the website was update 2/4/25 - Details changed!
+
 """
 from selenium import webdriver
 from selenium.webdriver.common.by import By

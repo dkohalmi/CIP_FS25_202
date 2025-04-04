@@ -84,8 +84,8 @@ def clean_gallup_safety():
     merged_df.reset_index(drop=True, inplace=True)
 
     # Save cleaned output
-    merged_df.to_csv("data/clean/Gallup_Clean.csv", index=False)
-    print("Cleaned & merged CSV saved: Gallup_Clean.csv")
+    merged_df.to_csv("data/clean/Gallup_safety_clean.csv", index=False)
+    print("Cleaned & merged CSV saved: Gallup_safety_clean.csv")
 
 if __name__ == "__main__":
     clean_gallup_safety()

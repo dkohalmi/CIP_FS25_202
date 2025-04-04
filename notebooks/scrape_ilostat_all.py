@@ -13,6 +13,9 @@ The robots.txt on this website was checked to ensure that information scrapped w
 
 authors:    Jade Bullock
 date:       25.03.2025
+
+!!Important Note!! Information on the website was update 2/4/25 - Details changed!
+
 """
 
 from selenium import webdriver
@@ -116,12 +119,12 @@ class ILOScraper:
 # === Example Usage ===
 if __name__ == "__main__":
     urls = [
-        "https://ilostat.ilo.org/topics/safety-and-health-at-work/",
-        "https://ilostat.ilo.org/topics/working-time/",
-        "https://ilostat.ilo.org/topics/wages/",
-        "https://ilostat.ilo.org/topics/unemployment-and-labour-underutilization/",
-        "https://ilostat.ilo.org/topics/working-poverty/",
-        "https://ilostat.ilo.org/topics/labour-productivity/"
+        "https://ilostat.ilo.org/topics/safety-and-health-at-work/",# has been updated/changed 2/4/25,
+        "https://ilostat.ilo.org/topics/working-time/", # has been updated/changed 2/4/25,
+        "https://ilostat.ilo.org/topics/wages/", # has been updated/changed 2/4/25,
+        "https://ilostat.ilo.org/topics/unemployment-and-labour-underutilization/", # has been updated/changed 2/4/25,
+        "https://ilostat.ilo.org/topics/working-poverty/", # has been updated/changed 2/4/25,
+        "https://ilostat.ilo.org/topics/labour-productivity/" # has been updated/changed 2/4/25,
 
     ]
 
