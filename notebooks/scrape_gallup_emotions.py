@@ -11,7 +11,7 @@ authors:    Jade Bullock
 date:       21.03.2025
 """
 
-def scrape_gallup_emotions(save_path: str = "../data/raw/gallup_emotions.csv", headless: bool = True):
+def scrape_gallup_emotions(save_path: str = "../data/raw/gallup_emotions_raw.csv", headless: bool = True):
     from selenium import webdriver
     from selenium.webdriver.common.by import By
     from selenium.webdriver.common.action_chains import ActionChains
