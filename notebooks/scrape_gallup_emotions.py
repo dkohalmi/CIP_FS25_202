@@ -7,6 +7,8 @@ For each emotion, the script:
 - Waits for the data table to update
 - Extracts data per country (Yes / No / Don't Know)
 
+The robots.txt on this website was checked to ensure that information scrapped was allowed.
+
 authors:    Jade Bullock
 date:       21.03.2025
 """

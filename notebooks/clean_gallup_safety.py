@@ -1,17 +1,7 @@
 """
-authors:    Jade Bullock
-date:       21.03.2025
+This script cleans and validates Gallup Safety and Law & Order index data.
 
-
-"""
-import pandas as pd
-from scrape_gallup_safety import get_gallup_dataframes
-
-def clean_gallup_safety():
-    """
-    Cleans and validates Gallup Safety and Law & Order index data.
-
-    This function:
+This function:
     - Retrieves raw Safety and Law & Order dataframes from the scraper module
     - Standardizes country names and merges the datasets
     - Checks for mismatched countries before merging
@@ -21,7 +11,18 @@ def clean_gallup_safety():
     - Sorts and resets the index for consistency
     - Saves the final cleaned and validated dataset as 'Gallup_Cleaned.csv'
 
-    Intended for preparing the dataset for further analysis or visualization.
+Intended for preparing the dataset for further analysis or visualization.
+
+authors:    Jade Bullock
+date:       26.03.2025
+
+"""
+import pandas as pd
+from scrape_gallup_safety import get_gallup_dataframes
+
+def clean_gallup_safety():
+    """
+    Cleans and validates Gallup Safety and Law & Order index data.
     """
     # Get the dataframes from scrape_gallup_safety for cleaning
     df_safety, df_law_order = get_gallup_dataframes()
