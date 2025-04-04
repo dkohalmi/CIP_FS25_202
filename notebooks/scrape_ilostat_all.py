@@ -100,8 +100,8 @@ class ILOScraper:
         if data:
             df = pd.DataFrame(data, columns=headers)
             self.dataframes[topic] = df #save each dataframe individually
-            df.to_csv(f"data/{topic}_raw.csv", index=False)
-            print(f" Data saved to data/{topic}_raw.csv")
+            df.to_csv(f"../data/{topic}_raw.csv", index=False)
+            print(f" Data saved to ../data/{topic}_raw.csv")
         else:
             print(f" No data found for {topic}")
 

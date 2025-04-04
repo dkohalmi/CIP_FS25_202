@@ -83,7 +83,7 @@ os.makedirs("data", exist_ok=True)
 # Save to CSV
 if data:
     ilosat_employment = pd.DataFrame(data, columns=["Country", "Employment to Population ratio"])
-    ilosat_labour.to_csv("data/employment.csv", index=False)
-    print("Data saved to data/employment.csv")
+    ilosat_labour.to_csv("../data/employment.csv", index=False)
+    print("Data saved to ../data/employment.csv")
 else:
     print("No data found.")

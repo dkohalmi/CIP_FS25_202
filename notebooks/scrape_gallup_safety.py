@@ -45,5 +45,5 @@ merged_df = pd.merge(
     on="Country", suffixes=("_Safety", "_LawOrder")
 )
 
-merged_df.to_csv("Gallup_Safety_and_Law_Index_raw.csv", index=False)
-print("CSV saved: Gallup_Safety_and_Law_Index.csv")
+merged_df.to_csv("../data/Gallup_Safety_and_Law_Index_raw.csv", index=False)
+print("CSV saved: ../data/Gallup_Safety_and_Law_Index.csv")
