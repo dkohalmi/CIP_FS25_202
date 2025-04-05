@@ -13,6 +13,9 @@ The robots.txt on this website was checked to ensure that information scrapped w
 
 authors:    Jade Bullock
 date:       25.03.2025
+
+!!Important Note!! Information on the website was update 2/4/25 - Details changed!
+
 """
 
 from selenium import webdriver
@@ -73,7 +76,7 @@ class ILOScraper:
             header_cells = thead.find_all("th")
             headers = [cell.get_text(strip=True) for cell in header_cells]
         else:
-            print("⚠️ No <thead> found — using default headers.")
+            print("️ No <thead> found — using default headers.")
             headers = ["Country", {topic}]
 
         # Extract rows from <tbody>
@@ -100,8 +103,8 @@ class ILOScraper:
         if data:
             df = pd.DataFrame(data, columns=headers)
             self.dataframes[topic] = df #save each dataframe individually
-            df.to_csv(f"data/{topic}_raw.csv", index=False)
-            print(f" Data saved to data/{topic}_raw.csv")
+            df.to_csv(f"../data/{topic}_raw.csv", index=False)
+            print(f" Data saved to ../data/{topic}_raw.csv")
         else:
             print(f" No data found for {topic}")
 
@@ -116,12 +119,12 @@ class ILOScraper:
 # === Example Usage ===
 if __name__ == "__main__":
     urls = [
-        "https://ilostat.ilo.org/topics/safety-and-health-at-work/",
-        "https://ilostat.ilo.org/topics/working-time/",
-        "https://ilostat.ilo.org/topics/wages/",
-        "https://ilostat.ilo.org/topics/unemployment-and-labour-underutilization/",
-        "https://ilostat.ilo.org/topics/working-poverty/",
-        "https://ilostat.ilo.org/topics/labour-productivity/"
+        "https://ilostat.ilo.org/topics/safety-and-health-at-work/",# has been updated/changed 2/4/25,
+        "https://ilostat.ilo.org/topics/working-time/", # has been updated/changed 2/4/25,
+        "https://ilostat.ilo.org/topics/wages/", # has been updated/changed 2/4/25,
+        "https://ilostat.ilo.org/topics/unemployment-and-labour-underutilization/", # has been updated/changed 2/4/25,
+        "https://ilostat.ilo.org/topics/working-poverty/", # has been updated/changed 2/4/25,
+        "https://ilostat.ilo.org/topics/labour-productivity/" # has been updated/changed 2/4/25,
 
     ]
 
