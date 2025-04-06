@@ -20,11 +20,6 @@ Date: 04.04.2025
 import pandas as pd
 import os
 
-#def check_data_type(df):
-    #'"""Checks the data type of the columns in the dataframe. """
-    #print("\nColumn data types:")
-    #print(df.dtypes)
-    #return df
 
 def clean_numeric_columns(df: pd.DataFrame, skip_first: bool = True) -> pd.DataFrame:
     """Removes thousands comma, dollar sign and percentage sign from numeric columns."""

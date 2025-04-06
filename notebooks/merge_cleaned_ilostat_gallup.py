@@ -12,7 +12,7 @@ https://data.worldhappiness.report/map
 
 
 Authors: Jade Bullock
-Date: 04.04.2025
+Date: 05.04.2025
 """
 import pandas as pd
 import os
