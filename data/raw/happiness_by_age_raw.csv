@@ -1,0 +1,144 @@
+Country,All Ages,The Young,Lower Middle,Upper Middle,The Old,Happiest,Least Happy
+Finland,1,7,1,1,2,Old,Young
+Denmark,2,5,3,4,1,Old,Young
+Iceland,3,4,4,2,5,Young,LowerMiddle
+Sweden,4,18,8,3,4,Old,Young
+Israel,5,2,2,7,18,Young,Old
+Netherlands,6,9,5,5,7,Old,Young
+Norway,7,20,6,6,3,Old,Young
+Luxembourg,8,6,11,8,12,Young,LowerMiddle
+Switzerland,9,13,9,11,14,Young,UpperMiddle
+Australia,10,19,14,10,9,Old,LowerMiddle
+New Zealand,11,27,18,13,6,Old,LowerMiddle
+Costa Rica,12,11,15,23,17,Young,UpperMiddle
+Kuwait,13,16,20,9,13,Old,LowerMiddle
+Austria,14,12,17,18,15,Young,UpperMiddle
+Canada,15,58,28,12,8,Old,Young
+Belgium,16,24,13,15,19,LowerMiddle,Old
+Ireland,17,21,21,21,16,Young,UpperMiddle
+Czechia,18,10,12,22,23,Young,Old
+Lithuania,19,1,7,20,44,Young,Old
+United Kingdom,20,32,27,19,20,Old,LowerMiddle
+Slovenia,21,15,10,27,32,Young,Old
+United Arab Emirates,22,35,25,16,11,Old,LowerMiddle
+United States,23,62,42,17,10,Old,LowerMiddle
+Germany,24,47,16,28,21,LowerMiddle,Young
+Mexico,25,22,19,32,33,Young,Old
+Uruguay,26,30,22,34,24,Young,UpperMiddle
+France,27,48,23,26,25,LowerMiddle,Old
+Saudi Arabia,28,42,39,14,27,UpperMiddle,LowerMiddle
+Kosovo,29,23,37,33,39,Young,Old
+Singapore,30,54,36,25,26,UpperMiddle,Old
+Taiwan Province of China,31,25,35,31,34,Young,Old
+Romania,32,8,26,35,48,Young,Old
+El Salvador,33,17,38,45,52,Young,Old
+Estonia,34,44,24,30,35,LowerMiddle,Old
+Poland,35,43,34,24,40,UpperMiddle,Old
+Spain,36,55,40,29,29,UpperMiddle,Old
+Serbia,37,3,29,44,54,Young,Old
+Chile,38,39,32,42,46,Young,Old
+Panama,39,26,43,41,56,Young,Old
+Malta,40,57,41,38,31,Young,UpperMiddle
+Italy,41,41,31,39,38,Young,Old
+Guatemala,42,49,46,54,49,Young,Old
+Nicaragua,43,28,53,61,47,Young,UpperMiddle
+Brazil,44,60,44,40,37,Young,Old
+Slovakia,45,38,33,37,60,Young,Old
+Latvia,46,31,30,49,51,Young,Old
+Uzbekistan,47,71,62,36,22,Old,LowerMiddle
+Argentina,48,34,52,64,45,Young,UpperMiddle
+Kazakhstan,49,69,48,43,42,Young,Old
+Cyprus,50,51,49,62,57,Young,Old
+Japan,51,73,63,52,36,Young,LowerMiddle
+South Korea,52,52,45,55,59,Young,Old
+Philippines,53,70,68,58,43,Young,LowerMiddle
+Vietnam,54,65,54,53,69,Young,Old
+Portugal,55,46,50,46,63,Young,Old
+Hungary,56,36,51,48,70,Young,Old
+Paraguay,57,37,59,75,83,Young,Old
+Thailand,58,45,69,69,41,Young,UpperMiddle
+Malaysia,59,64,66,60,71,Young,Old
+China,60,79,67,57,30,Old,LowerMiddle
+Honduras,61,56,72,73,58,Young,UpperMiddle
+Bahrain,62,77,60,50,61,Young,Old
+Croatia,63,14,47,59,80,Young,Old
+Greece,64,53,58,56,67,Young,Old
+Bosnia and Herzegovina,65,33,65,67,78,Young,Old
+Libya,66,80,73,51,50,UpperMiddle,LowerMiddle
+Jamaica,67,84,61,47,68,UpperMiddle,Old
+Peru,68,63,64,80,73,Young,UpperMiddle
+Dominican Republic,69,61,70,79,75,Young,Old
+Mauritius,70,85,77,63,28,Old,LowerMiddle
+Moldova,71,29,55,66,86,Young,Old
+Russia,72,68,57,78,66,Young,UpperMiddle
+Bolivia,73,74,75,77,65,Young,UpperMiddle
+Ecuador,74,59,79,89,84,Young,Old
+Kyrgyzstan,75,81,81,68,55,Young,LowerMiddle
+Montenegro,76,50,56,70,97,Young,Old
+Mongolia,77,86,74,65,53,Young,LowerMiddle
+Colombia,78,76,78,71,72,Young,Old
+Venezuela,79,83,80,83,64,Young,UpperMiddle
+Indonesia,80,75,82,84,79,Young,Old
+Bulgaria,81,40,71,74,90,Young,Old
+Armenia,82,72,83,88,88,Young,Old
+South Africa,83,87,84,81,82,Young,Old
+North Macedonia,84,67,76,85,98,Young,Old
+Algeria,85,93,85,82,62,Old,UpperMiddle
+Hong Kong S.A.R. of China,86,97,89,72,74,UpperMiddle,LowerMiddle
+Albania,87,66,86,97,100,Young,Old
+Tajikistan,88,89,88,86,87,Young,Old
+Congo (Brazzaville),89,88,97,90,85,Young,Old
+Mozambique,90,94,87,96,89,Young,UpperMiddle
+Georgia,91,78,91,91,91,Young,Old
+Iraq,92,90,96,94,95,Young,Old
+Nepal,93,92,101,93,76,Young,UpperMiddle
+Laos,94,104,93,76,77,UpperMiddle,LowerMiddle
+Gabon,95,91,99,100,106,Young,Old
+Ivory Coast,96,100,92,95,96,Young,Old
+Guinea,97,103,94,99,81,Old,UpperMiddle
+Türkiye,98,101,98,92,92,Young,Old
+Senegal,99,99,104,102,111,Young,Old
+Iran,100,96,100,104,103,Young,UpperMiddle
+Azerbaijan,101,95,103,103,108,Young,Old
+Nigeria,102,108,95,87,130,UpperMiddle,Old
+State of Palestine,103,102,105,109,99,Young,UpperMiddle
+Cameroon,104,106,102,98,107,Young,Old
+Ukraine,105,82,90,110,115,Young,Old
+Namibia,106,105,106,101,114,Young,Old
+Morocco,107,98,108,107,113,Young,Old
+Pakistan,108,107,109,113,122,Young,Old
+Niger,109,116,110,114,101,Old,UpperMiddle
+Burkina Faso,110,117,107,116,105,LowerMiddle,UpperMiddle
+Mauritania,111,119,112,106,93,Old,LowerMiddle
+Gambia,112,110,116,115,112,Young,LowerMiddle
+Chad,113,120,111,111,94,Old,UpperMiddle
+Kenya,114,109,119,123,119,Young,UpperMiddle
+Tunisia,115,118,113,108,118,Young,Old
+Benin,116,115,117,122,117,Young,UpperMiddle
+Uganda,117,111,118,124,134,Young,Old
+Myanmar,118,122,115,105,102,Old,LowerMiddle
+Cambodia,119,112,122,120,110,Young,LowerMiddle
+Ghana,120,121,114,119,125,Young,Old
+Liberia,121,113,126,127,104,Young,UpperMiddle
+Mali,122,125,120,118,116,Young,LowerMiddle
+Madagascar,123,124,123,117,109,Old,LowerMiddle
+Togo,124,126,121,112,127,UpperMiddle,Old
+Jordan,125,114,124,130,123,Young,UpperMiddle
+India,126,127,127,121,121,Young,LowerMiddle
+Egypt,127,130,125,126,124,Young,UpperMiddle
+Sri Lanka,128,123,128,128,128,Young,UpperMiddle
+Bangladesh,129,128,129,129,120,Young,UpperMiddle
+Ethiopia,130,131,130,125,131,Young,LowerMiddle
+Tanzania,131,129,132,131,126,Young,UpperMiddle
+Comoros,132,132,139,133,135,Young,LowerMiddle
+Yemen,133,135,135,136,129,Young,UpperMiddle
+Zambia,134,136,131,138,142,Young,Old
+Eswatini,135,134,134,137,136,Young,UpperMiddle
+Malawi,136,137,140,135,132,Young,LowerMiddle
+Botswana,137,133,133,140,140,Young,Old
+Zimbabwe,138,139,138,139,137,Young,UpperMiddle
+Congo (Kinshasa),139,140,137,134,139,Young,Old
+Sierra Leone,140,141,136,132,133,Old,LowerMiddle
+Lesotho,141,138,141,142,138,Young,UpperMiddle
+Lebanon,142,142,142,141,141,Young,Old
+Afghanistan,143,143,143,143,143,Young,Old
