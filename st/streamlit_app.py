@@ -29,7 +29,7 @@ def main_page():
     """Contains the main page of the Happiness Around the World Streamlit App."""
     # Title:
     st.markdown("""<div style="text-align:center;"><h1>Happiness around the World</h1></div>""", unsafe_allow_html=True)
-    st.image("st/happiness_cut.jpg", use_container_width=True)
+    st.image("st/images/happiness_cut.jpg", use_container_width=True)
 
     st.subheader("🌍 Welcome to the Global Happiness Explorer!")
     st.write("")
@@ -66,17 +66,17 @@ def main_page():
     PATH_BETTERLIFE="data/clean/betterlife.clean.csv"
     PATH_HAPPINESSINDEX="data/clean/happinessindex.xlsx"
     #
-    # Function to load and cache data from a csv file:
-    @st.cache_data
-    def load_csv_data(path):
-        """"Read csv file into a Pandas data frame and cache it. """
-        return pd.read_csv(path)
+#    # Function to load and cache data from a csv file:
+#    @st.cache_data
+#    def load_csv_data(path):
+#        """"Read csv file into a Pandas data frame and cache it. """
+#        return pd.read_csv(path)
 
-    # Function to load and cache data from a xlsx file:
-    @st.cache_data
-    def load_xlsx_data(path):
-        """"Read xlsx file into a Pandas data frame and cache it. """
-        return pd.read_excel(path)
+#    # Function to load and cache data from a xlsx file:
+#    @st.cache_data
+#    def load_xlsx_data(path):
+#        """"Read xlsx file into a Pandas data frame and cache it. """
+#        return pd.read_excel(path)
 
     # Load data from files and store them in session state for accessibility across pages:
     if "df_betterlife_raw" not in st.session_state:
