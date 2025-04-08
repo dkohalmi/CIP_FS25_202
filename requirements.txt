@@ -5,8 +5,9 @@ pandas
 plotly
 seaborn
 streamlit
-
+numpy==1.24.0
 beautifulsoup4~=4.13.3
 webdriver-manager~=4.0.2
 tqdm
 openpyxl
+scikit-learn==1.1.3
