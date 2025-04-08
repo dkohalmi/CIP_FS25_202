@@ -38,7 +38,26 @@ Understand which social and economic indicators predict happiness:
 Rank top predictors of happiness
 
 # Folder Structure
-<pre> ``` CIP_FS25_202/ │ ├── data/ │ ├── raw/ # Original downloaded CSV and scraped data │ ├── clean/ # Cleaned versions of the data │ ├── merged/ # Final merged datasets (with happiness index) │ ├── notebooks/ │ ├── clean_scripts.py # Data cleaning for each source │ ├── merge_datasets.py # Merging and harmonizing datasets │ ├── analysis.py # Correlation, regression, random forest │ └── visuals/ # Optional saved plots and figures │ ├── report/ │ ├── CIP_Final_Report.pdf # Your final project write-up │ └── figures/ # Any exported charts or tables for the report │ ├── README.md ├── requirements.txt # Python libraries to install └── LICENSE (if applicable) ``` </pre>
+<pre> ```CIP_FS25_GXX/
+│
+├── data/
+│   ├── raw/                # Original downloaded CSV and scraped data
+│   ├── clean/              # Cleaned versions of the data
+│   ├── merged/             # Final merged datasets (with happiness index)
+│
+├── notebooks/
+│   ├── clean_scripts.py    # Data cleaning for each source
+│   ├── merge_datasets.py   # Merging and harmonizing datasets
+│   ├── analysis.py         # Correlation, regression, random forest
+│   └── visuals/            # Optional saved plots and figures
+│
+├── report/
+│   ├── CIP_Final_Report.pdf    # Final project write-up
+│   └── figures/                # Exported charts and tables for the report
+│
+├── README.md
+├── requirements.txt        # Python libraries to install
+└── LICENSE (if applicable) ``` </pre>
 
 
 
