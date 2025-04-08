@@ -1,124 +1,130 @@
 ###########################################
-# Happiness Streamlit App
+# Happiness Around the World Streamlit App
 #
 # Author: Dora Kohalmi
+# Date: 06.04.2025
+#_________________________________________
+# This script contains the main page of the Happiness Around the World Streamlit App.
 #
 ###########################################
 
-import streamlit as st  # Streamlit must be imported first
-
-import json
-import os
-
+import streamlit as st  
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import plotly.express as px
-import plotly.graph_objects as go
-import plotly.figure_factory as ff
-
-#from sklearn.cluster import KMeans
-#from sklearn.preprocessing import StandardScaler
-#import scipy.cluster.hierarchy as sch
-#import scipy.stats as stats
-#from sklearn.cluster import DBSCAN, KMeans
-#from sklearn.decomposition import PCA
-#from sklearn.preprocessing import MinMaxScaler
-#from sklearn.neighbors import NearestNeighbors
-#from sklearn.metrics import silhouette_score
-
-#from datetime import datetime
-
-from helper_functions import prepare_betterlife, prepare_happiness, merge_betterlife
-from betterlife_page import betterlife_page
-from happiness_page import happiness_page
-from emotions_page import emotions_page
-
-
+from helper_functions import load_csv_data, load_xlsx_data, prepare_betterlife, prepare_happiness, merge_betterlife
 
 #################
 # Page decoration
 #################
-
 st.set_page_config(
     page_title="World Happiness App",  # Page title, displayed on the window/tab bar
     page_icon="🌍",  # Emoji or favicon
     layout="wide",  # Full width
-    menu_items={'About': "App to explore happiness and life satisfaction around the World"}
+    menu_items={'About': "Explore happiness and life satisfaction around the world using data and interactive visualizations."}
 )
 
+#####################
+# Main Streamlit page
+#####################
+def main_page():
+    """Contains the main page of the Happiness Around the World Streamlit App."""
+    # Title:
+    st.markdown("""<div style="text-align:center;"><h1>Happiness around the World</h1></div>""", unsafe_allow_html=True)
+    st.image("st/happiness_cut.jpg", use_container_width=True)
 
-###########
-# Load data
-###########
-# Relative paths to the clean data:
-PATH_BETTERLIFE="data/clean/betterlife.clean.csv"
-PATH_HAPPINESSINDEX="data/clean/happinessindex.xlsx"
-#
-# Function to load and cache data from a csv file:
-@st.cache_data
-def load_csv_data(path):
-    """"Read csv file into a Pandas data frame and cache it. """
-    df = pd.read_csv(path)
-    return df
+    st.subheader("🌍 Welcome to the Global Happiness Explorer!")
+    st.write("")
+    # Introduction:
+    st.markdown(
+        """
+        Happiness is a rich and complex concept -- shaped by both how we feel and the conditions we live in.
+        From economic stability and healthcare to personal freedom and community support, 
+        many factors come together to define what it means to live a fulfilling life.
 
-# Function to load and cache data from a xlsx file:
-@st.cache_data
-def load_xlsx_data(path):
-    """"Read xlsx file into a Pandas data frame and cache it. """
-    df = pd.read_excel(path)
-    return df
+    This interactive app invites you to explore the **multifaceted nature of happiness** across the globe.
+    Using data from the **World Happiness Index**, the **OECD Better Life Index**, **Gallup** and **Ilostat**. you'll dive 
+    into both **subjective experiences** (how people report their well-being) and **objective indicators** (such as income, 
+    health, and education).
 
-# Load data from files and store them in session state for accessibility across tabs:
-if "df_betterlife_raw" not in st.session_state:
-    st.session_state.df_betterlife_raw=load_csv_data(PATH_BETTERLIFE)
-if "df_happiness_raw" not in st.session_state:    
-    st.session_state.df_happiness_raw=load_xlsx_data(PATH_HAPPINESSINDEX)
+    #### Discover for yourself:
+    - What factors most strongly correlate with happiness?
+    - How do countries differ in life satisfaction and living standards?
+    - Which elements of well-being are most impactful?
 
-##############
-# Prepare data
-##############
+    Whether you're curious about global trends, social research, or simply what makes people happy -- this tool is designed 
+    to help you **explore, compare,** and **uncover insights** in a visual and engaging way.
 
-# Prepare df_betterlife only if it hasn't been processed yet:
-if "df_betterlife" not in st.session_state:
-    processed_df = prepare_betterlife(st.session_state.df_betterlife_raw)
-    
-    # Ensure the function didn't fail before saving it:
-    if processed_df is not None:
-        st.session_state.df_betterlife = processed_df
-    else:
-        st.error("Failed to prepare Better Life dataframe.")    
+    👉 Get started by selecting a page from the sidebar to begin your exploration.
+
+    """)
+
+    st.divider() 
+
+    ###########
+    # Load data
+    ###########
+    # Relative paths to the clean data:
+    PATH_BETTERLIFE="data/clean/betterlife.clean.csv"
+    PATH_HAPPINESSINDEX="data/clean/happinessindex.xlsx"
+    #
+    # Function to load and cache data from a csv file:
+    @st.cache_data
+    def load_csv_data(path):
+        """"Read csv file into a Pandas data frame and cache it. """
+        return pd.read_csv(path)
+
+    # Function to load and cache data from a xlsx file:
+    @st.cache_data
+    def load_xlsx_data(path):
+        """"Read xlsx file into a Pandas data frame and cache it. """
+        return pd.read_excel(path)
+
+    # Load data from files and store them in session state for accessibility across pages:
+    if "df_betterlife_raw" not in st.session_state:
+        st.session_state.df_betterlife_raw=load_csv_data(PATH_BETTERLIFE)
+    if "df_happiness_raw" not in st.session_state:    
+        st.session_state.df_happiness_raw=load_xlsx_data(PATH_HAPPINESSINDEX)
 
 
-# Prepare df_happiness dataframe:
-if "df_happiness" not in st.session_state:    
-    processed_df = prepare_happiness(st.session_state.df_happiness_raw)
+    ##############
+    # Prepare data
+    ##############
 
-    # Ensure the function didn't fail before saving it:
-    if processed_df is not None:
-        st.session_state.df_happiness = processed_df
-    else:
-        st.error("Failed to prepare Happiness dataframe.")    
+    # Prepare df_betterlife only if it hasn't been processed yet:
+    if "df_betterlife" not in st.session_state:
+        processed_df = prepare_betterlife(st.session_state.df_betterlife_raw)
+
+        # Ensure the function didn't fail before saving it:
+        if processed_df is not None:
+            st.session_state.df_betterlife = processed_df
+        else:
+            st.error("Failed to prepare Better Life dataframe.")    
 
 
-# Merge df_betterlife with df_happiness:
-if "df_betterlife_merged" not in st.session_state:    
-    processed_df = merge_betterlife(st.session_state.df_betterlife, 
+    # Prepare df_happiness dataframe:
+    if "df_happiness" not in st.session_state:    
+        processed_df = prepare_happiness(st.session_state.df_happiness_raw)
+
+        # Ensure the function didn't fail before saving it:
+        if processed_df is not None:
+            st.session_state.df_happiness = processed_df
+        else:
+            st.error("Failed to prepare Happiness dataframe.")    
+
+
+    # Merge df_betterlife with df_happiness:
+    if "df_betterlife_merged" not in st.session_state:    
+        processed_df = merge_betterlife(st.session_state.df_betterlife, 
                                                   st.session_state.df_happiness)
-    # Ensure the function didn't fail before saving it:
-    if processed_df is not None:
-        st.session_state.df_betterlife_merged = processed_df
-    else:
-        st.error("Failed to merge Better Life and Happiness dataframe.")    
+        # Ensure the function didn't fail before saving it:
+        if processed_df is not None:
+            st.session_state.df_betterlife_merged = processed_df
+        else:
+            st.error("Failed to merge Better Life and Happiness dataframe.")    
 
-
-# Create a joined dataframe
-
-################################
-# Create session_state variables
-################################
-betterlife_var_dict= {"Population": "Population",
+    ################################
+    # Create variable dictionary
+    ################################
+    betterlife_var_dict= {"Population": "Population",
                       "Visitors": "Visitors",
                       "Renewable Energy": "Renewable_Energy",
                       "Housing": "Housing",
@@ -133,23 +139,11 @@ betterlife_var_dict= {"Population": "Population",
                       "Safety": "Safety",
                       "Work-Life Balance": "Work_Life_Balance",
                       "Happiness Index": "Happiness_Index"}
-if "betterlife_var_dict" not in st.session_state:
-    st.session_state.betterlife_var_dict=betterlife_var_dict
+    if "betterlife_var_dict" not in st.session_state:
+        st.session_state.betterlife_var_dict=betterlife_var_dict
 
-############################
-# Pages of the Streamlit App
-############################
-
-tab1, tab2, tab3 = st. tabs(["Better Life Index", "World Happiness", "Emotions"])
-
-with tab1:
-    betterlife_page()
-
-with tab2:
-    happiness_page()
-
-with tab3:
-    emotions_page()        
+# Run the main page logic
+main_page()
 
 
 

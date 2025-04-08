@@ -1,17 +1,74 @@
-# helper functions for the streamlit app
+####################################################################
+# Helper functions for the Happiness around the World Streamlit App
+#
+# Author: Dora Kohalmi
+# Date: 08.04.2025
+#
+# This modules contains helper functions for the Streamlit App.
+####################################################################
+"""
+helper_functions.py
+
+This module contains utility functions for loading, preparing, and merging data
+used in the World Happiness Streamlit application.
+
+Functions:
+----------
+- load_csv_data: Load and cache CSV files
+- load_xlsx_data: Load and cache Excel files
+- prepare_betterlife: Clean the OECD Better Life Index dataset
+- prepare_happiness: Clean the World Happiness Index dataset
+- merge_betterlife: Merge the two datasets on country names
+
+Author: Dora Kohalmi
+Created: 2025-04-08
+"""
+
 import pandas as pd
 import numpy as np
+import streamlit as st
+
+
+# Function to load and cache data from a csv file:
+@st.cache_data
+def load_csv_data(path):
+    """
+    Load and cache a CSV file into a pandas DataFrame.
+
+    Parameters:
+       path (str): Path to the CSV file.
+
+    Returns:
+       pd.DataFrame: DataFrame containing the loaded data.
+    """
+    return pd.read_csv(path)
+
+
+# Function to load and cache data from a xlsx file:
+@st.cache_data
+def load_xlsx_data(path):
+    """
+    Load and cache an Excel (.xlsx) file into a pandas DataFrame.
+
+    Parameters:
+       path (str): Path to the Excel file.
+
+    Returns:
+       pd.DataFrame: DataFrame containing the loaded data.
+    """
+    return pd.read_excel(path)
+
 
 # Function for preparing the Better Life dataframe:
 def prepare_betterlife(df):
-    """ Deletes all Inequality columns from a dataframe.
+    """
+    Clean and transform the raw Better Life Index dataset.
     
         Parameters: 
-           df: dataframe (Better Life dataframe)
+           df (pandas DataFrame): Raw Better Life data)
 
         Output: 
-           dataframe without the Inequality columns if there were such columns in the dataframe ,
-           otherwise returns the original dataframe
+           pandas DataFrame: clean and transformed Better Life data (Inequality columns removed)
     """
     # Make a copy of the original dataframe:
     df_new=df.copy()
@@ -34,14 +91,14 @@ def prepare_betterlife(df):
 
 # Function for preparing the Happiness dataframe:
 def prepare_happiness(df):
-    """ Filter necessary data from Happiness dataframe.
+    """ 
+    Clean and filter the World Happiness Index dataframe.
     
         Parameters:
-           df: dataframe (expects Happiness dataframe with "Country name", "Ladder score", "Year" columns)
+           df (pandas DataFrame): Happiness Index dataframe with "Country name", "Ladder score", "Year" , etc. columns
 
         Output:
-           dataframe with 2024 data and "Country name", "Ladder score", "Year" columns if no errors occurred,
-           None otherwise  
+           pandas DataFrame: contains only data for 2024,  only the columns "Country name", "Ladder score", "Year" columns
     """
 
     try:
@@ -72,15 +129,15 @@ def prepare_happiness(df):
         
 
 def merge_betterlife(df1, df2):
-    """ Merges Better Life dataframe with Happiness Index dataframe.
+    """ 
+    Merges Better Life dataframe with Happiness Index dataframe on country name.
     
-        Parameters:
-           df1: dataframe (Better Life Index dataframe with "Country" column)
-           df2: dataframe (Happiness Index dataframe with "Country name" column)
+    Parameters:
+        df1 (pandas DataFrame): Better Life Index dataframe with "Country" column
+        df2 (pandas DataFrame): Happiness Index dataframe with "Country name" column
 
-        Output:
-           dataframe: merged dataframe if no error occurs,
-           None otherwise   
+    Returns::
+        pandas DataFrame: merged dataframe  
     """
     try:
 
@@ -117,7 +174,3 @@ def merge_betterlife(df1, df2):
     
     # Return None if an error occurs
     return None  
-
-
-
-

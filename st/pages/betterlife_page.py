@@ -362,6 +362,52 @@ def betterlife_page():
 
     st.markdown("""<div style="text-align:center;"><h1>Better Life Index</h1></div>""", unsafe_allow_html=True)
     st.write("Data Source: https://www.oecdbetterlifeindex.org/")
+    st.write("""
+Which factors have the biggest impact on happiness?
+Data Analysis of the Better Life Index and the World Happiness Index
+
+Explore the question of which factors have the biggest impact on happiness. 
+             To answer this question we use two datasets: the World Happiness dataset containing the World Happiness 
+             Index for 2024 for many countries and the Better Life Index dataset containing in
+
+
+This Jupyter Notebook aims to analyse the OECD Better Life Index data set that contains information about
+              11 aspects of life in 41 OECD countries. These 11 aspects are Housing, Income, Jobs, Community, Education,
+              Environment, Civic Engagement, Health, Life Satisfaction, Safety and Work-Life Balance. For each of these
+              aspects an average score between 0 and 10 for each country can be found in the data set. These indices are 
+             calculated based on three or four Indicators describing important subaspects of the particular area. For example 
+             the Housing index was calculated based on Housing Expenditure (defined as the ratio of housing costs on 
+             households' gross adjusted disposable income), Basic Facilities (percentage of people with indoor flushing
+              toilets in their home) and Rooms per Person (average number of rooms shared per person in a dwelling). The 
+             data for all these Indicators are also contained in the dataset, together with the information about Population,
+              number of Visitors per year and the percentage of Renewable Energy used in the country. For many Indicators 
+             there are also information about the gender and social inequalities experienced in that aspect of life. This 
+             information though is not consistently available for all the countries.
+
+This Jupyter Notebook analyses the Better Life Index data set and the correlation between these indices and the World
+              Happiness Index with the goal to better understand which spects of life play the most important role in the 
+             experience happiness.
+
+To do the analysis we first explore the Better Life Index data set, then wee merge it with the dataframe containing the
+              World Happiness Index and analyses the correlation between the Happiness Index and the parameters of different
+              aspects of life to investigate the most important factors influencing Happiness and Life satisfaction around 
+             the world.
+
+The Better Life Index dataset contains information about different aspects of life for 41 OECD countries. The data was 
+             extracted from the OECD Better Life Index webpage from the Country section using the /src/scrape.betterlife.py 
+             Python script. The extracted raw data can be found in /data/raw/betterlife.raw.csv file. 
+             The /src/clean.betterlife.py Python script cleans the extracted raw data and save it into the
+              /data/clean/betterlife.csv file.
+
+The World Happiness Index data was downloaded as an xlsx file from the 
+             [https://worldhappiness.report/ed/2025/#appendices-and-data] webpage.
+
+""")
+
+
+
+
+
 
     # Load session state data
     df_betterlife = st.session_state.df_betterlife
@@ -529,7 +575,7 @@ def betterlife_page():
 
 
 
-
+betterlife_page()
     
 
 #st.bar_chart(df_betterlife_merged["Population"])

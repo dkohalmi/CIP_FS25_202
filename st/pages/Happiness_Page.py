@@ -39,5 +39,6 @@ def happiness_page():
         """,
         unsafe_allow_html=True)
 
+happiness_page()
 
 

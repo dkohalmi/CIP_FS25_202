@@ -39,5 +39,5 @@ def emotions_page():
         """,
         unsafe_allow_html=True)
 
-
+emotions_page()
 
