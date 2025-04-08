@@ -4,6 +4,9 @@
 # Author: Dora Kohalmi
 #
 ###########################################
+
+import streamlit as st  # Streamlit must be imported first
+
 import json
 import os
 
@@ -14,7 +17,7 @@ import seaborn as sns
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
-import streamlit as st
+
 #from sklearn.cluster import KMeans
 #from sklearn.preprocessing import StandardScaler
 #import scipy.cluster.hierarchy as sch
@@ -27,26 +30,28 @@ import streamlit as st
 
 #from datetime import datetime
 
+from helper_functions import prepare_betterlife, prepare_happiness, merge_betterlife
 from betterlife_page import betterlife_page
 from happiness_page import happiness_page
 from emotions_page import emotions_page
-##################################################
+
+
+
+#################
 # Page decoration
-##################################################
+#################
+
+st.set_page_config(
+    page_title="World Happiness App",  # Page title, displayed on the window/tab bar
+    page_icon="🌍",  # Emoji or favicon
+    layout="wide",  # Full width
+    menu_items={'About': "App to explore happiness and life satisfaction around the World"}
+)
 
 
-st.set_page_config(page_title="World Happiness App", # page title, displayed on the window/tab bar
-        		   page_icon="blue", # favicon: icon that shows on the window/tab bar (tip: you can use emojis)
-                   layout="wide", # use full width of the page
-                   menu_items={
-                       'About': "App to explore happiness and life satisfaction around the World"
-                   })
-
-
-
-##################################################
+###########
 # Load data
-##################################################
+###########
 # Relative paths to the clean data:
 PATH_BETTERLIFE="data/clean/betterlife.clean.csv"
 PATH_HAPPINESSINDEX="data/clean/happinessindex.xlsx"
@@ -66,15 +71,74 @@ def load_xlsx_data(path):
     return df
 
 # Load data from files and store them in session state for accessibility across tabs:
+if "df_betterlife_raw" not in st.session_state:
+    st.session_state.df_betterlife_raw=load_csv_data(PATH_BETTERLIFE)
+if "df_happiness_raw" not in st.session_state:    
+    st.session_state.df_happiness_raw=load_xlsx_data(PATH_HAPPINESSINDEX)
+
+##############
+# Prepare data
+##############
+
+# Prepare df_betterlife only if it hasn't been processed yet:
 if "df_betterlife" not in st.session_state:
-    st.session_state.df_betterlife=load_csv_data(PATH_BETTERLIFE)
+    processed_df = prepare_betterlife(st.session_state.df_betterlife_raw)
+    
+    # Ensure the function didn't fail before saving it:
+    if processed_df is not None:
+        st.session_state.df_betterlife = processed_df
+    else:
+        st.error("Failed to prepare Better Life dataframe.")    
+
+
+# Prepare df_happiness dataframe:
 if "df_happiness" not in st.session_state:    
-    st.session_state.df_happiness=load_xlsx_data(PATH_HAPPINESSINDEX)
+    processed_df = prepare_happiness(st.session_state.df_happiness_raw)
+
+    # Ensure the function didn't fail before saving it:
+    if processed_df is not None:
+        st.session_state.df_happiness = processed_df
+    else:
+        st.error("Failed to prepare Happiness dataframe.")    
 
 
-##################################################
-# Different pages
-##################################################
+# Merge df_betterlife with df_happiness:
+if "df_betterlife_merged" not in st.session_state:    
+    processed_df = merge_betterlife(st.session_state.df_betterlife, 
+                                                  st.session_state.df_happiness)
+    # Ensure the function didn't fail before saving it:
+    if processed_df is not None:
+        st.session_state.df_betterlife_merged = processed_df
+    else:
+        st.error("Failed to merge Better Life and Happiness dataframe.")    
+
+
+# Create a joined dataframe
+
+################################
+# Create session_state variables
+################################
+betterlife_var_dict= {"Population": "Population",
+                      "Visitors": "Visitors",
+                      "Renewable Energy": "Renewable_Energy",
+                      "Housing": "Housing",
+                      "Income": "Income",
+                      "Jobs": "Jobs",
+                      "Community": "Community",
+                      "Education": "Education",
+                      "Environment": "Environment",
+                      "Civic Engagement": "Civic_Engagement",
+                      "Health": "Health",
+                      "Life Satisfaction": "Life_Satisfaction",
+                      "Safety": "Safety",
+                      "Work-Life Balance": "Work_Life_Balance",
+                      "Happiness Index": "Happiness_Index"}
+if "betterlife_var_dict" not in st.session_state:
+    st.session_state.betterlife_var_dict=betterlife_var_dict
+
+############################
+# Pages of the Streamlit App
+############################
 
 tab1, tab2, tab3 = st. tabs(["Better Life Index", "World Happiness", "Emotions"])
 
