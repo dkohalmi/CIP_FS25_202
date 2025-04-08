@@ -16,16 +16,18 @@ Functions:
 ----------
 - load_csv_data: Load and cache CSV files
 - load_xlsx_data: Load and cache Excel files
+- load_all_data: Load and cache all necessary files
 - prepare_betterlife: Clean the OECD Better Life Index dataset
 - prepare_happiness: Clean the World Happiness Index dataset
 - merge_betterlife: Merge the two datasets on country names
+- prepare_all_data: Clean Better Life and Happiness datasets and merge them 
+- create_var_dict: Create a dictionary to map display names to column names
 
 Author: Dora Kohalmi
 Created: 2025-04-08
 """
 
 import pandas as pd
-import numpy as np
 import streamlit as st
 
 
@@ -57,6 +59,27 @@ def load_xlsx_data(path):
        pd.DataFrame: DataFrame containing the loaded data.
     """
     return pd.read_excel(path)
+
+
+# Function to load and cache all data for the Application:
+def load_all_data():
+    """
+    Load and cache all required datasets into Streamlit session state.
+    
+    Loads:
+    - OECD Better Life Index data (CSV)
+    - World Happiness Index data (XLSX)
+    
+    Stores them in st.session_state to make them accessible across pages.
+    """
+    PATH_BETTERLIFE = "data/clean/betterlife.clean.csv"
+    PATH_HAPPINESSINDEX = "data/clean/happinessindex.xlsx"
+
+    if "df_betterlife_raw" not in st.session_state:
+        st.session_state.df_betterlife_raw = load_csv_data(PATH_BETTERLIFE)
+
+    if "df_happiness_raw" not in st.session_state:
+        st.session_state.df_happiness_raw = load_xlsx_data(PATH_HAPPINESSINDEX)
 
 
 # Function for preparing the Better Life dataframe:
@@ -174,3 +197,76 @@ def merge_betterlife(df1, df2):
     
     # Return None if an error occurs
     return None  
+
+
+def prepare_all_data():
+    """
+    Prepare and cache all datasets in Streamlit session state:
+    - Prepare and store the Better Life dataset.
+    - Prepare and store the Happiness dataset.
+    - Merge the Better Life and Happiness datasets.
+
+    This function ensures that the data is only processed once and stored for later use.
+    """
+    
+    # Prepare df_betterlife only if it hasn't been processed yet:
+    if "df_betterlife" not in st.session_state:
+        processed_df = prepare_betterlife(st.session_state.df_betterlife_raw)
+
+        # Ensure the function didn't fail before saving it:
+        if processed_df is not None:
+            st.session_state.df_betterlife = processed_df
+        else:
+            st.error("Failed to prepare Better Life dataframe.")    
+
+    # Prepare df_happiness dataframe if it hasn't been processed yet:
+    if "df_happiness" not in st.session_state:
+        processed_df = prepare_happiness(st.session_state.df_happiness_raw)
+
+        # Ensure the function didn't fail before saving it:
+        if processed_df is not None:
+            st.session_state.df_happiness = processed_df
+        else:
+            st.error("Failed to prepare Happiness dataframe.")    
+
+    # Merge df_betterlife with df_happiness if not already merged:
+    if "df_betterlife_merged" not in st.session_state:
+        processed_df = merge_betterlife(st.session_state.df_betterlife, 
+                                        st.session_state.df_happiness)
+
+        # Ensure the function didn't fail before saving it:
+        if processed_df is not None:
+            st.session_state.df_betterlife_merged = processed_df
+        else:
+            st.error("Failed to merge Better Life and Happiness dataframe.")
+
+
+def create_var_dict():
+    """
+    Create a dictionary mapping display names to column names for Better Life metrics.
+    Stores the dictionary in session state for use across multiple pages.
+    """
+    betterlife_var_dict = {
+        "Population": "Population",
+        "Visitors": "Visitors",
+        "Renewable Energy": "Renewable_Energy",
+        "Housing": "Housing",
+        "Income": "Income",
+        "Jobs": "Jobs",
+        "Community": "Community",
+        "Education": "Education",
+        "Environment": "Environment",
+        "Civic Engagement": "Civic_Engagement",
+        "Health": "Health",
+        "Life Satisfaction": "Life_Satisfaction",
+        "Safety": "Safety",
+        "Work-Life Balance": "Work_Life_Balance",
+        "Happiness Index": "Happiness_Index"
+    }
+
+    # Store the dictionary in session state if not already stored
+    if "betterlife_var_dict" not in st.session_state:
+        st.session_state.betterlife_var_dict = betterlife_var_dict
+
+
+
