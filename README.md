@@ -28,11 +28,15 @@ We scraped open data from:
 
   
 - World Happiness Report 
+  - https://data.worldhappiness.report/map
+- Happiness by Age (Table 2.2: Ranking of life evaluations by age group, 2021 - 2023)
+  - https://worldhappiness.report/ed/2024/happiness-of-the-younger-the-older-and-those-in-between/
 
 
 - Better Life
 
-We scraped, collected, cleaned, and merged these datasets, then applied visual analytics as well as statistical and machine learning methods to evaluate which indicators most strongly relate to happiness.
+We scraped, collected, cleaned, and merged these datasets, then applied visual analytics as well as statistical and 
+machine learning methods to evaluate which indicators most strongly relate to happiness.
 
 # Key Objectives
 Understand which social and economic indicators predict happiness:
@@ -112,11 +116,11 @@ Rank top predictors of happiness
 #Team Contributions
 
 
-| Name          | GitHub Name | Data Sources Scraped, Cleaned, and Analyzed        |
-|---------------|-------------|----------------------------------------------------|
-| Jade Bullock  | jbull999    | Gallup Global, ILOSTAT                             |
-| Dora          |             |                                                    |
-| Ramona        |             |                                                    |
+| Name            | GitHub Name | Data Sources Scraped, Cleaned, and Analyzed |
+|-----------------|-------------|---------------------------------------------|
+| Jade Bullock    | jbull999    | Gallup Global, ILOSTAT                      |
+| Dora            |             |                                             |
+| Ramona Kölliker | Ra-Mona09   | World Happiness Report, Happiness by Age    |
 
 
 # Report
