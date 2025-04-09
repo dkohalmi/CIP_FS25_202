@@ -22,24 +22,24 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
 
 
 def scrape_value_by_data_indicator_id(driver, id, key, gender= False, social=False, gender_key="Gender_Inequality", 
                                       social_key="Social_Inequality"):
-    ''' Function to scrape data from the Indicator sections 
+    ''' 
+    Scrape data from the Indicator sections 
     
-        Parameters: 
-           driver: web-driver instance to use
-           id: data-indicator-id
-           key: name of the variable stored in the dictionary (column name in the dataframe/csv file)
-           gender: if True, we want to scrape Gender Inequality measure
-           social: if True, we want to scrape Social Inequality measure
-           gender_key: if Gender Inequality measure was scraped, this will be the name of the variable 
-           social_key: if Social Inequality measure was scraped, this will be the name of the variable
-
-        Output: 
-           dict_country: as a global variable to collect all the data belonging to one particular country   
-        ''' 
+    Parameters:
+        driver (WebDriver): web-driver instance to use
+        id (str): data-indicator-id
+        key (str): Column name in the dataframe/csv file
+        gender (bool): if True, scrape Gender Inequality measure
+        social (bool): if True, scrape Social Inequality measure
+        gender_key (str): Dict key for Gender Inequality value.
+        social_key (str): Dict key for Social Inequality value
+    ''' 
+    
     # Define dict_country as a global variable so that we can collect all data for a particular country into the same dictionary:
     global dict_country
 
@@ -50,62 +50,52 @@ def scrape_value_by_data_indicator_id(driver, id, key, gender= False, social=Fal
         list_of_values = [value.text for value in values]
 
         # Add the first value to the dictionary:
-        dict_country.update({key:list_of_values[0] if len(list_of_values) > 0 else "N/A"})
+        dict_country[key] = list_of_values[0] if list_of_values else "N/A"
+        
        
         # Find out whether there is a "trend section" or not, because it also has a "value" in which case the gender and social inequality 
         # values are shifted below in the list_of_values:
-        trend_shift=0
+        # Detect trend section
         try:
-            if element.find_element(By.CSS_SELECTOR, ".trend.section"):
-                trend_true=True
-        except:
-            trend_true=False
-            
-        # We need a shift in list_of_values if there is a trend section:    
-        if trend_true:
-            trend_shift=1
+            element.find_element(By.CSS_SELECTOR, ".trend.section")
+            trend_shift = 1
+        except NoSuchElementException:
+            trend_shift = 0
 
         # Check whether there is Gender or Social inequality section and find the value belonging to it in list_of_values, 
-        # if gender = True or social = True
+
+        # Handle Gender Inequality
         if gender:
             try:
-                gender=element.find_element(by=By.CSS_SELECTOR, value=".gender.inequality.section")
-                dict_country.update({gender_key:list_of_values[1+trend_shift] if len(list_of_values) >(1+trend_shift) else "N/A"})
-            except:    
-                dict_country.update({gender_key:"N/A"})
-                print('No gender inequality section for ',id)
-            if social:
-                try:
-                    social=element.find_element(by=By.CSS_SELECTOR, value=".social.inequality.section")
-                    dict_country.update({social_key: list_of_values[2+trend_shift]if len(list_of_values) >2+trend_shift else "N/A"}) 
-                except:
-                    dict_country.update({social_key:"N/A"})
-                    print('No social inequality section for ',id)
-        elif social:
-            try:
-                social=element.find_element(by=By.CSS_SELECTOR, value=".social.inequality.section")
-                dict_country.update({social_key: list_of_values[-1] if len(list_of_values) >1 else "N/A"})
-            except:
-                dict_country.update({social_key:"N/A"}) 
-                print('No social inequality section for ',id)
-        return
-    except:
-        # If we haven't found a section with this id we set the value in the dictionary to N/A:
-        print('No section for ',id)
-        # Add "N/A" to the dictionary:
-        dict_country.update({key:"N/A"})
-        
-        # If the gender or social flag was set but we haven't found such sections or values for them.
-        if gender:
-            dict_country.update({gender_key:"N/A"})
+                element.find_element(By.CSS_SELECTOR, ".gender.inequality.section")
+                idx = 1 + trend_shift
+                dict_country[gender_key] = list_of_values[idx] if len(list_of_values) > idx else "N/A"
+            except NoSuchElementException:
+                dict_country[gender_key] = "N/A"
+                print(f"No gender inequality section for {id}")
+
+        # Handle Social Inequality
         if social:
-            dict_country.update({social_key:"N/A"})   
-        return
+            try:
+                element.find_element(By.CSS_SELECTOR, ".social.inequality.section")
+                idx = 2 + trend_shift if gender else 1 + trend_shift
+                dict_country[social_key] = list_of_values[idx] if len(list_of_values) > idx else "N/A"
+            except NoSuchElementException:
+                dict_country[social_key] = "N/A"
+                print(f"No social inequality section for {id}")
+
+    except NoSuchElementException:
+        print(f"No section found for {id}")
+        dict_country[key] = "N/A"
+        if gender:
+            dict_country[gender_key] = "N/A"
+        if social:
+            dict_country[social_key] = "N/A"
 
 
 def main():
     """
-    Function to scrape the numerical data from the Country section of the Better Life Index webpage 
+    Scrape the numerical data from the Country section of the Better Life Index webpage 
     ("https://www.oecdbetterlifeindex.org/#/11111111111").
 
     Parameters: None
