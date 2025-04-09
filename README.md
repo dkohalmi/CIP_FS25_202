@@ -8,8 +8,8 @@ What Drives Happiness? A Comparative Analysis Using Betterlife, Gallup, ILOSTAT 
 This project explores the following questions:
 
 - Which factors have the biggest impact on happiness?
-- How have happiness levels changed globally over the past decade?
-- Do people's experienced emotions effect happiness and is there a difference in happiness between old people and young people?
+- Is there a difference in happiness between old people and young people?
+- Do people's experienced emotions affect happiness?
 
 We scraped open data from:
 
@@ -61,8 +61,8 @@ Rank top predictors of happiness
 │
 ├── data/
 │   ├── raw/                # Original downloaded CSV and scraped data
-│   ├── clean/              # Cleaned versions of the data
-│   ├── merged/             # Final merged datasets (with happiness index)
+│   ├── clean/              # Cleaned and merged versions of the data
+│   
 │
 ├── notebooks/
 │   ├── clean_scripts.py    # Data cleaning for each source

@@ -1,14 +1,15 @@
 
 
 """
-Final script to merge all 7 x cleaned ILOSTAT datasets into a master file (../data/clean/ilostat_merge.csv.)
-It also adds the happiness index ("ladder score") from cleaned data sourced from
-https://data.worldhappiness.report/map.
+This script merges multiple cleaned ILOSTAT (7 datasets) and 2 x Gallup datasets into two master CSV files:
+- ../data/clean/ilostat_merge.csv
+- ../data/clean/gallup_merge.csv
 
-Final script to merge the two cleaned Gallup datasets into a master file (../data/clean/gallup_merge.csv) and adds
-the happiness index ("ladder score") from cleaned data sourced from
-https://data.worldhappiness.report/map
-
+For both, the script:
+- Standardizes and normalizes country names across sources for consistent merging.
+- Adds the 2024 Happiness Index ("Ladder score") from cleaned data sourced from:
+  https://data.worldhappiness.report/map
+- Prints unmatched countries to assist in troubleshooting merge mismatches.
 
 
 Authors: Jade Bullock
@@ -97,8 +98,8 @@ def load_happiness_data():
 def merge_dataframes(file_paths):
     """
      Merges multiple CSV files into a single dataframe using outer joins.
-    - Normalizes country names from each file
-    - Applies country fixes for naming consistency
+    - Normalizes country names from each file (using function)
+    - Applies country fixes for naming consistency (using function)
     - Deduplicates any repeated column names
     - Removes aggregate-only rows with no relevant data
     """

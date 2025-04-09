@@ -1,14 +1,15 @@
+pandas~=2.2.3
+selenium~=4.30.0
+matplotlib~=3.10.1
 pandas
-selenium
-matplotlib
-pandas
-plotly
-seaborn
-streamlit
-numpy
-beautifulsoup4
-webdriver-manager
+plotly~=6.0.1
+seaborn~=0.13.2
+streamlit~=1.43.2
+numpy~=2.2.4
+beautifulsoup4~=4.13.3
+webdriver-manager~=4.0.2
 tqdm
 openpyxl
-scikit-learn
+scikit-learn~=1.6.1
+requests~=2.32.3
 
