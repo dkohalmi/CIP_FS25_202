@@ -31,18 +31,30 @@ import streamlit as st
 # TAB 3: Emotions 
 ##################################################
 def emotions_page():
-    st.write(
-        f"""
-        <div style="text-align:center;">
-            <h1>Emotions</h1>
-        </div>
-        """,
-        unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align:center;'>Emotions & Happiness</h1>", unsafe_allow_html=True)
+
+    # === Blurb introduction ===
+    st.markdown("""
+        ####  Explore the Emotional Side of Happiness
+
+        In this section, we explore the emotional fabric of well-being:  
+        - **What emotions do people experience most often in happier countries?**  
+        - **Are positive feelings like enjoyment and respect more predictive of happiness than the absence of negative ones like stress or pain?**
+
+        To answer these questions, we draw on data from:
+
+        - **The [Gallup Global Emotions Survey](https://news.gallup.com/interactives/248240/global-emotions.aspx):**: A worldwide measure of how people **actually feel** on a day-to-day basis — capturing responses about enjoyment, sadness, worry, stress, anger, respect, and more.
+        - **The [World Happiness Index](https://worldhappiness.report/ed/2025/#appendices-and-data):**: An annual index that ranks countries based on **life satisfaction**, built from both emotional and structural factors.
+
+
+
+        **Select an emotion from the dropdown to see how it relates to happiness around the world**
+        """)
 
     # === Load Data ===
     try:
         df = pd.read_csv("data/clean/gallup_merge.csv")
-        st.success(" Gallup Emotions data loaded successfully.")
+        #st.success(" Gallup Emotions data loaded successfully.")
 
 
         # List of available emotion-related features (ending in _yes)
