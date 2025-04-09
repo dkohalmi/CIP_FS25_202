@@ -6,21 +6,9 @@
 #
 # This file contains the Better Life Index page of the Happiness around the World Streamlit App.
 ################################################################################################
-""" This .... """
-import json
-import os
-
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import plotly.express as px
-import plotly.graph_objects as go
-import plotly.figure_factory as ff
 import streamlit as st
 
 from helper_functions import load_all_data, prepare_all_data, create_var_dict
-
 from utils import get_var_name, render_betterlife_table, render_bar_plot, render_world_map
 from utils import render_scatter_vs_happiness, render_correlation_plot, render_correlation_heatmap
 from utils import render_metric_comparison, render_country_comparison_charts
@@ -30,15 +18,12 @@ from utils import render_metric_comparison, render_country_comparison_charts
 # TAB 1: Better Life Index 
 ##################################################
 def betterlife_page():
+    """Contains the Better Life Index page of the Happiness Around the World Streamlit App."""
 
-    load_all_data()
-    prepare_all_data()
-    create_var_dict()
-
-    st.markdown("""<div style="text-align:center;"><h1>Better Life Index</h1></div>""", unsafe_allow_html=True)
-#    st.write("Data Source: https://www.oecdbetterlifeindex.org/ and https://worldhappiness.report/ed/2025/#appendices-and-data ")
+    # Title:
+    st.markdown("""<div style="text-align:center;"><h1>Better Life Index</h1></div>""", unsafe_allow_html=True)    
     
-    
+    # Introduction:
     st.markdown("""
 In this section, you can explore the fundamental question: What makes a country truly happy? Which factors have the biggest
  impact on happiness?
@@ -59,78 +44,63 @@ By analyzing how these dimensions correlate with the World Happiness Index, this
 - How do objective living conditions shape subjective well-being?
 
 """)
-    
 
-    # Load session state data
+
+    # Ensure everything is loaded into session_state:
+    if "df_betterlife" not in st.session_state or "df_betterlife_merged" not in st.session_state or "betterlife_var_dict" not in st.session_state:
+        load_all_data()
+        prepare_all_data()
+        create_var_dict()
+
+    # Load session_state data:
     df_betterlife = st.session_state.df_betterlife
     df_betterlife_merged = st.session_state.df_betterlife_merged
     betterlife_var_dict = st.session_state.betterlife_var_dict
-    
-    # Init toggle state
+
+
+    # Init toggle state for data table:
     if "show_betterlife_table" not in st.session_state:
         st.session_state.show_betterlife_table = False
 
+    # Tabs at the bottom:
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(["Data Table", "Explore a Country", "World Map", "Happiness Index",
+                                                         "Compare Metrics", "Country Comparison", "Correlation Insights"])
 
-    tab4, tab5, tab6, tab7, tab1, tab2, tab3 = st.tabs(["Data Table", "Explore One Country", "World Map", "Happiness Index", "📊 Compare Metrics", "🌐 Country Comparison", "📈 Correlation Insights"])
-
-    with tab4:
+    with tab1:
         st.subheader("Explore Better Life Index Data")
-        render_betterlife_table(df_betterlife_merged)
+        render_betterlife_table(df_betterlife_merged, betterlife_var_dict)
 
-    with tab5: 
- 
+    with tab2: 
         st.subheader("Explore Better Life Metrics by Country")
         render_bar_plot(df_betterlife, betterlife_var_dict)
 
-    with tab6:
+    with tab3:
         st.subheader("Explore Better Life Metrics on a Map")
         render_world_map(df_betterlife, betterlife_var_dict)
    
-    with tab7:
+    with tab4:
         col1, _, col2 = st.columns([3,1,3])
         with col1:
             st.subheader("Happiness Index vs Better Life Index")
             render_scatter_vs_happiness(df_betterlife_merged, betterlife_var_dict)
         with col2:
-            st.subheader("Correlation of Better Life Indices with Happiness Index")
-            #st.write("")
-            #st.write("")
+            st.subheader("Correlation of Better Life Indices with Happiness Index")   
             st.markdown("<br><br><br>", unsafe_allow_html=True)
-
             render_correlation_plot(df_betterlife_merged, betterlife_var_dict)
-
            
-    with tab1:
-        render_metric_comparison(df_betterlife_merged, betterlife_var_dict, get_var_name)  # Scatter plot section
+    with tab5:
+        # Scatter plot - "Compare Any Two Better Life Metrics":
+        render_metric_comparison(df_betterlife_merged, betterlife_var_dict, get_var_name)  
 
-    with tab2:
+    with tab6:
+        # Radar plot, bar plot for max 3 countries - "Compare Countries Across All Metrics":
         render_country_comparison_charts(df_betterlife_merged, betterlife_var_dict)
         
-    with tab3:
+    with tab7:
+        # Correlation Heatmap:
         col1, col2 =st.columns([2,1])
         with col1:
             render_correlation_heatmap(df_betterlife_merged, betterlife_var_dict)
-
-    #st.subheader("Explore Better Life Index Data")
-    #render_betterlife_table(df_betterlife)
-
-    #st.subheader("Explore Better Life Metrics by Country")
-    #render_bar_plot(df_betterlife, betterlife_var_dict)
-
-    #st.subheader("Explore Better Life Metrics on a Map")
-    #render_world_map(df_betterlife, betterlife_var_dict)
-
-    #st.subheader("Happiness vs Better Life Indicators")
-    #render_scatter_vs_happiness(df_betterlife_merged, betterlife_var_dict)
-
-
-    #render_correlation_heatmap(df_betterlife_merged, betterlife_var_dict)
-    #render_correlation_plot(df_betterlife_merged, betterlife_var_dict)
-
-    #render_metric_comparison(df_betterlife_merged, betterlife_var_dict, get_var_name)
-
-    #render_country_comparison_charts(df_betterlife_merged, betterlife_var_dict)
-
 
 
 betterlife_page()
