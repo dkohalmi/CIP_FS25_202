@@ -4,32 +4,44 @@
 # Author: Dora Kohalmi
 # Date: 08.04.2025
 ##################################################################
+"""
+plotting_betterlife.py
 
-import json
-import os
+This module contains plotting functions for the Better Life page of
+ the World Happiness Streamlit application.
 
-import pandas as pd
-import numpy as np
+Functions:
+----------
+- toggle_betterlife_table: Switch between the states 'Show'/'Hide'  of the Better Life Index table
+- get_var_name: Returns the column name belonging to a displayed variable name
+- render_betterlife_table: Display Better Life Index table
+- render_bar_plot: Render bar plot for selected Better Life Index for all countries
+- render_world_map: Render World map for a selected Better Life Index
+- render_scatter_vs_happiness: Render scatter plot to show Happiness vs a selected Better Life Index
+- render_correlation_plot: Render a horizontal bar chart to show the correlation between Happiness Index and Better Life metrics.
+- render_correlation_heatmap: Render correlation heatmap for Better Life Indices
+- render_metric_comparison: Render an interactive scatter plot comparing any two Better Life Index metrics
+- render_country_comparison_charts: Render a radar chart and a grouped bar plot to compare countries
+
+
+Author: Dora Kohalmi
+Created: 2025-04-08
+"""
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 import plotly.graph_objects as go
-import plotly.figure_factory as ff
 import streamlit as st
 
 
-
-####################################
-# Functions used by Better Life page
-####################################
-
-# Toggle visibility of Better Life Index table:
-
+########## Toggle visibility of Better Life Index table ###############:
 def toggle_betterlife_table():
     """"Switch between the states 'Show'/'Hide'  of the Better Life Index table."""
     st.session_state.show_betterlife_table = not st.session_state.show_betterlife_table
 
 
+########## Return column name ################:
 def get_var_name(name, dict):
     """
     Returns the column name belonging to a displayed variable name.
@@ -45,8 +57,14 @@ def get_var_name(name, dict):
     return dict.get(name, f"'{name}' not found")
  
 
-############# Display Better Life Table ############:
-def render_betterlife_table(df):
+########### Display Better Life Table ############:
+def render_betterlife_table(df, var_dict):
+    """
+    Displays the Better Life Index table.
+    
+    Parameters:
+        df (pandas DataFrame): Better Life Index dataframe
+    """
     st.button("Show/Hide Better Life Index Data",
               key="button_show_betterlife",
               on_click=toggle_betterlife_table,
@@ -56,11 +74,11 @@ def render_betterlife_table(df):
 
     # Display table if show_betterlife_table is True:
     if st.session_state.show_betterlife_table:
-    
+        selected_columns = ["Country"]+list(var_dict.values())
+        df = df[selected_columns]
         st.dataframe(
            df,
            column_config={
-                #"name": "App name",
                 "Population": st.column_config.NumberColumn(
                 "Population",
                 help="Population of the Country",
@@ -131,21 +149,20 @@ def render_betterlife_table(df):
                 help="Average Work Life Balance Score (1-10)",
                 format="%.1f",
                 ),
-                "Rooms_per_person": st.column_config.NumberColumn(
-                "Rooms per person",
-                help="Average number of rooms per person",
-                #format="%d.2 Million",
-                ),
-
              },
            hide_index=True,
         )
 
 
-
-
-# === Bar Plot ===
+################### Bar Plot for one topic and all countries ###############
 def render_bar_plot(df, var_dict):
+    """
+    Renders a bar plot to show the valueof a selected Happiness Index across all OECD countries.
+
+    Parameters:
+    - df (pd.DataFrame): Merged Better Life DataFrame 
+    - var_dict (dict): Dictionary mapping display names to column names.
+    """
     # Select topic from Better Life Index column names:
     col1, _, col2 = st.columns([1,1,1])
     with col1:
@@ -179,8 +196,15 @@ def render_bar_plot(df, var_dict):
             st.warning(f"'{selected_column}' not found in dataframe.")
 
 
-# === Choropleth Map ===
+##################### Choropleth Map ###################
 def render_world_map(df, var_dict):
+    """
+    Renders a Chloropleth map to show a selected Better Life metrics across all OECD countries.
+
+    Parameters:
+    - df (pd.DataFrame): Merged Better Life DataFrame 
+    - var_dict (dict): Dictionary mapping display names to column names.
+    """
     col1, col2 = st.columns([1,2])
     with col1:    
         selected_topic = st.selectbox("Select a metric to display on the world map:", options=list(var_dict.keys()),
@@ -212,38 +236,51 @@ def render_world_map(df, var_dict):
             st.warning(f"'{selected_column}' not found in dataframe.")
 
 
-# === Scatter Plot ===
+###################  Scatter Plot ###############
 def render_scatter_vs_happiness(df, var_dict):
+    """
+    Renders a scatter plot between Happiness Index and a selected Better Life metrics.
+
+    Parameters:
+    - df (pd.DataFrame): Merged Better Life DataFrame 
+    - var_dict (dict): Dictionary mapping display names to column names.
+    """
     selected_topic = st.selectbox("Scatterplot: Select a topic", options=list(var_dict.keys()), index=0)
     if selected_topic:
         selected_column = get_var_name(selected_topic, var_dict)
         if selected_column in df.columns:
-            fig = px.scatter(df, x=selected_column, y="Happiness_Index", title=f"{selected_topic} vs Happiness")
+            fig = px.scatter(df, x=selected_column, y="Happiness_Index", title=f"Happiness vs {selected_topic}")
             st.plotly_chart(fig)
         else:
             st.warning(f"'{selected_column}' not found in data.")
 
 
+################## Correlation Plot ##################
 def render_correlation_plot(df, var_dict):
+    """
+    Renders a horizontal bar chart to show the correlation between Happiness Index and Better Life metrics.
 
-    # 1. Extract relevant columns: Happiness Index + Better Life Index metrics
+    Parameters:
+    - df (pd.DataFrame): Merged Better Life DataFrame 
+    - var_dict (dict): Dictionary mapping display names to column names.
+    """
+    # Extract relevant columns: Happiness Index + Better Life Index metrics
     selected_columns = list(var_dict.values())
 
-    # 2. Drop rows with NaNs to avoid issues during correlation calculation
+    # Drop rows with NaNs to avoid issues during correlation calculation
     df_corr = df[selected_columns].dropna()
 
-    # 3. Compute correlation matrix
+    # Compute correlation matrix
     corr_matrix = df_corr.corr()
 
-    #st.write(type(corr_matrix["Happiness_Index"]))
-    # 4. Get correlation values with Happiness_Index (excluding self-correlation)
+    # Get correlation values with Happiness_Index (excluding self-correlation)
     corr_with_happiness = corr_matrix["Happiness_Index"].drop("Happiness_Index")
 
-    # 5. Sort correlations by absolute strength (descending)
+    # Sort correlations by absolute strength (descending)
     corr_sorted = corr_with_happiness.sort_values(ascending=False).reset_index()
     corr_sorted.columns = ["Metric", "Correlation"]
 
-    # 6. Plot bar chart
+    # Plot bar chart
     fig = px.bar(
         corr_sorted,
         y="Metric",
@@ -257,12 +294,23 @@ def render_correlation_plot(df, var_dict):
     st.plotly_chart(fig, use_container_width=True)
 
 
+################# Correlation Heatmap ##################
 def render_correlation_heatmap(df, var_dict):
+    """
+    Renders a correlation heatmap of Better Life metrics, including Happiness Index.
+
+    Parameters:
+        df (pd.DataFrame): The merged dataframe containing all relevant metrics.
+        var_dict (dict): Dictionary mapping display names to dataframe column names.
+    """
     st.subheader("Correlation Heatmap")
 
-    selected_columns = ["Happiness_Index"] + list(var_dict.values())
+    # Extract unique list: ensure Happiness_Index is first, then add the rest if not already included
+    selected_columns = ["Happiness_Index"] + [col for col in var_dict.values() if col != "Happiness_Index"]
+
     df_corr = df[selected_columns].dropna()
 
+    # Calculate correlation matrix:
     corr_matrix = df_corr.corr()
 
     fig, ax = plt.subplots(figsize=(10, 8))
@@ -278,13 +326,14 @@ def render_correlation_heatmap(df, var_dict):
     st.pyplot(fig)
 
 
-def render_metric_comparison(df_betterlife_merged, betterlife_var_dict, get_var_name):
+############### Scatter Plot of two Metrics #################
+def render_metric_comparison(df, var_dict, get_var_name):
     """
     Renders an interactive scatter plot comparing any two Better Life Index metrics.
 
     Parameters:
-    - df_betterlife_merged (pd.DataFrame): Merged DataFrame containing Better Life Index metrics and country data.
-    - betterlife_var_dict (dict): Dictionary mapping user-friendly metric names to column names in the DataFrame.
+    - df (pd.DataFrame): Merged DataFrame containing Better Life Index metrics
+    - var_dict (dict): Dictionary mapping user-friendly metric names to column names in the DataFrame.
     - get_var_name (function): Helper function to retrieve column name from a selected display name.
 
     Features:
@@ -295,27 +344,27 @@ def render_metric_comparison(df_betterlife_merged, betterlife_var_dict, get_var_
     
     st.subheader("Compare Any Two Better Life Metrics")
 
-    # Metric selection
+    # Metric selection:
     col1, col2, _ = st.columns([1,1,1])
     with col1:
-        x_metric = st.selectbox("Select X-axis", betterlife_var_dict, index=0)
-        x_column = get_var_name(x_metric, betterlife_var_dict)
+        x_metric = st.selectbox("Select X-axis", var_dict, index=0)
+        x_column = get_var_name(x_metric, var_dict)
     with col2:
-        y_metric = st.selectbox("Select Y-axis", betterlife_var_dict, index=1)
-        y_column = get_var_name(y_metric, betterlife_var_dict)
+        y_metric = st.selectbox("Select Y-axis", var_dict, index=1)
+        y_column = get_var_name(y_metric, var_dict)
 
-    # Normalize checkbox
+    # Normalize checkbox:
     normalize = st.checkbox("Normalize values (Min-Max Scale)")
 
-    # Data preparation
-    df_plot = df_betterlife_merged.copy()
-    df_plot["Population"] = df_plot["Population"].fillna(1)
-    df_plot["Visitors"] = df_plot["Visitors"].fillna(1)
-    df_plot["Renewable_Energy"] = df_plot["Renewable_Energy"].fillna(1)
+    # Prepare data and drop rows with missing values in relevant columns:
+    df_plot = df.copy()
+    required_columns = ["Country", "Population", x_column, y_column]
+    df_plot = df_plot.dropna(subset=required_columns)
 
-    # Apply normalization if selected
+
+    # Apply normalization if selected:
     if normalize:
-        for col in betterlife_var_dict.values():
+        for col in var_dict.values():
             min_val = df_plot[col].min(skipna=True)
             max_val = df_plot[col].max(skipna=True)
             range_val = max_val - min_val
@@ -324,7 +373,7 @@ def render_metric_comparison(df_betterlife_merged, betterlife_var_dict, get_var_
             else:
                 df_plot[col] = 0
 
-    # Create scatter plot
+    # Create scatter plot:
     fig_scatter = px.scatter(
         df_plot,
         x=x_column,
@@ -335,10 +384,10 @@ def render_metric_comparison(df_betterlife_merged, betterlife_var_dict, get_var_
         title=f"{y_metric} vs {x_metric}"
     )
 
-        # Make the plot square by setting equal width and height
+    # Make the plot square by setting width and height:
     fig_scatter.update_layout(
-        height=700,  # Adjust height as needed
-        width=500,   # Adjust width to match the height
+        height=700,  
+        width=500,   
         
     )
     col3, col4 = st.columns([3,1])
@@ -346,41 +395,33 @@ def render_metric_comparison(df_betterlife_merged, betterlife_var_dict, get_var_
         st.plotly_chart(fig_scatter, use_container_width=True)
 
 
-
-def render_country_comparison_charts(df_betterlife_merged, betterlife_var_dict):
+################### Radar chart and Bar plot for comparing countries ##################
+def render_country_comparison_charts(df, var_dict):
     """
     Renders two visualizations comparing countries across Better Life Index metrics:
     - A radar chart for up to 3 selected countries.
     - A grouped bar chart showing metric values per country.
 
     Parameters:
-    - df_betterlife_merged (pd.DataFrame): Merged DataFrame with country-level metrics.
-    - betterlife_var_dict (dict): Dictionary mapping display names to column names.
+    - df (pd.DataFrame): Merged DataFrame with country-level metrics.
+    - var_dict (dict): Dictionary mapping display names to column names.
     """
     st.subheader("Compare Countries Across All Metrics")
 
-    all_countries = df_betterlife_merged["Country"].unique().tolist()
+    all_countries = df["Country"].unique().tolist()
     selected_countries = st.multiselect("Select up to 3 countries to compare", all_countries, default=["Switzerland", "Norway"], max_selections=3)
-    #normalize = st.checkbox("Normalize metrics (Min-Max Scale)")
 
     if not selected_countries:
         st.info("Please select at least one country to display the charts.")
         return
 
-    metric_display_names = list(betterlife_var_dict.keys())
-    metric_columns = [betterlife_var_dict[name] for name in metric_display_names]
+    metric_display_names = list(var_dict.keys())
+    metric_columns = [var_dict[name] for name in metric_display_names]
 
-    df_selected = df_betterlife_merged[df_betterlife_merged["Country"].isin(selected_countries)].copy()
+    df_selected = df[df["Country"].isin(selected_countries)].copy()
     df_selected = df_selected[["Country"] + metric_columns].dropna()
 
-    # Normalize data if selected
-    #if normalize:
-    #    for col in metric_columns:
-    #        min_val = df_selected[col].min()
-    #        max_val = df_selected[col].max()
-    #        range_val = max_val - min_val
-    #        df_selected[col] = (df_selected[col] - min_val) / range_val if range_val else 0
-
+  
     # --- Radar Chart ---
     fig_radar = go.Figure()
     for _, row in df_selected.iterrows():
@@ -401,7 +442,7 @@ def render_country_comparison_charts(df_betterlife_merged, betterlife_var_dict):
 
     # --- Bar Chart ---
     df_melted = df_selected.melt(id_vars="Country", var_name="Metric", value_name="Value")
-    reverse_dict = {v: k for k, v in betterlife_var_dict.items()}
+    reverse_dict = {v: k for k, v in var_dict.items()}
     df_melted["Metric"] = df_melted["Metric"].map(reverse_dict)
 
     fig_bar = px.bar(

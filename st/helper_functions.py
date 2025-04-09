@@ -87,11 +87,11 @@ def prepare_betterlife(df):
     """
     Clean and transform the raw Better Life Index dataset.
     
-        Parameters: 
-           df (pandas DataFrame): Raw Better Life data)
+    Parameters: 
+       df (pandas DataFrame): Raw Better Life data)
 
-        Output: 
-           pandas DataFrame: clean and transformed Better Life data (Inequality columns removed)
+    Output: 
+       pandas DataFrame: clean and transformed Better Life data (Inequality columns removed)
     """
     # Make a copy of the original dataframe:
     df_new=df.copy()
@@ -117,11 +117,11 @@ def prepare_happiness(df):
     """ 
     Clean and filter the World Happiness Index dataframe.
     
-        Parameters:
-           df (pandas DataFrame): Happiness Index dataframe with "Country name", "Ladder score", "Year" , etc. columns
+    Parameters:
+       df (pandas DataFrame): Happiness Index dataframe with "Country name", "Ladder score", "Year" , etc. columns
 
-        Output:
-           pandas DataFrame: contains only data for 2024,  only the columns "Country name", "Ladder score", "Year" columns
+    Output:
+       pandas DataFrame: contains only data for 2024,  only the columns "Country name", "Ladder score", "Year" columns
     """
 
     try:

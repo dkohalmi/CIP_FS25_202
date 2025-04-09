@@ -1,3 +1,4 @@
+
 #######################################################
 # Happiness Around the World Streamlit App - Main Page
 #
@@ -62,79 +63,16 @@ def main_page():
 
     st.divider() 
 
-    ###########
-    # Load data
-    ###########
-    ## Relative paths to the clean data:
-    #PATH_BETTERLIFE="data/clean/betterlife.clean.csv"
-    #PATH_HAPPINESSINDEX="data/clean/happinessindex.xlsx"
 
-    ## Load data from files and store them in session state for accessibility across pages:
-    #if "df_betterlife_raw" not in st.session_state:
-    #    st.session_state.df_betterlife_raw=load_csv_data(PATH_BETTERLIFE)
-    #if "df_happiness_raw" not in st.session_state:    
-    #    st.session_state.df_happiness_raw=load_xlsx_data(PATH_HAPPINESSINDEX)
-
+    # Load Better Life and Happiness data from file and cache them:
     load_all_data()
 
+    # Clean Better Life data and Happiness data, merge them and save them in session_state:
     prepare_all_data()
+
+    # Create dictionary to map display name into column name:
     create_var_dict()
-    ##############
-    # Prepare data
-    ##############
 
-#    # Prepare df_betterlife only if it hasn't been processed yet:
-#    if "df_betterlife" not in st.session_state:
-#        processed_df = prepare_betterlife(st.session_state.df_betterlife_raw)#
-#
-#        # Ensure the function didn't fail before saving it:
-#        if processed_df is not None:
-#            st.session_state.df_betterlife = processed_df
-#        else:
-#            st.error("Failed to prepare Better Life dataframe.")    
-
-
-#    # Prepare df_happiness dataframe:
-#    if "df_happiness" not in st.session_state:    
-#        processed_df = prepare_happiness(st.session_state.df_happiness_raw)
-
-#        # Ensure the function didn't fail before saving it:
-#        if processed_df is not None:
-#            st.session_state.df_happiness = processed_df
-#        else:
-#            st.error("Failed to prepare Happiness dataframe.")    
-
-
-#    # Merge df_betterlife with df_happiness:
-#    if "df_betterlife_merged" not in st.session_state:    
-#        processed_df = merge_betterlife(st.session_state.df_betterlife, 
-#                                                  st.session_state.df_happiness)
-#        # Ensure the function didn't fail before saving it:
-#        if processed_df is not None:
-#            st.session_state.df_betterlife_merged = processed_df
-#        else:
-#            st.error("Failed to merge Better Life and Happiness dataframe.")    
-
-    ################################
-    # Create variable dictionary
-    ################################
-#    betterlife_var_dict= {"Population": "Population",
-#                      "Visitors": "Visitors",
-#                      "Renewable Energy": "Renewable_Energy",
-#                      "Housing": "Housing",
-#                      "Income": "Income",
-#                      "Jobs": "Jobs",
-#                      "Community": "Community",
-#                      "Education": "Education",
-#                      "Environment": "Environment",
-#                      "Civic Engagement": "Civic_Engagement",
-#                      "Health": "Health",
-#                      "Life Satisfaction": "Life_Satisfaction",
-#                      "Safety": "Safety",
-#                      "Work-Life Balance": "Work_Life_Balance",
-#                      "Happiness Index": "Happiness_Index"}
-#    if "betterlife_var_dict" not in st.session_state:
-#        st.session_state.betterlife_var_dict=betterlife_var_dict
 
 # Run the main page:
 main_page()
