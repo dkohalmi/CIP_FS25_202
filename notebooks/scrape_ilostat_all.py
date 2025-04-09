@@ -44,7 +44,7 @@ class ILOScraper:
         self.driver.get(url) # Load the URL
         time.sleep(3) # Allow for page to load
 
-        # Extract from the URL a name to name the output file
+        # Extract from the URL the website name to name the output file
         topic = url.rstrip("/").split("/")[-1].replace("-", "_")
 
         # Try command for switching into the iframe
@@ -71,7 +71,7 @@ class ILOScraper:
         soup = BeautifulSoup(self.driver.page_source, "html.parser")
         table = soup.select_one("table.medium")
 
-        # Extract headers from <thead> and use default if there are no headers
+        # Extract headers from <thead> and use default headers if there are no headers
         thead = table.find("thead")
         if thead:
             header_cells = thead.find_all("th")

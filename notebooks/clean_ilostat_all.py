@@ -129,7 +129,7 @@ def clean_labour_productivity_data(df: pd.DataFrame) -> pd.DataFrame:
 def clean_safety_and_health_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     Cleans the safety and health at work dataset by:
-    - Removing thousands separators (e.g., '9,421' → 9421)
+    - Removing thousands separators (e.g. '9,421' → 9421)
     - Converting all non-country columns to numeric
     - Checking for missing values and outliers
     """
@@ -214,7 +214,7 @@ def clean_employment_data(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def main():
-    # === UNEMPLOYMENT ===
+    # UNEMPLOYMENT
     unemployment_raw_path = "../data/raw/unemployment_and_labour_underutilization_raw.csv"
     unemployment_output_path = "../data/clean/ilostat_unemployment_clean.csv"
     unemployment_df = pd.read_csv(unemployment_raw_path)
@@ -225,7 +225,7 @@ def main():
     print(unemployment_cleaned.head())
     print(f"Unemployment cleaned file saved to {unemployment_output_path}")
 
-    # === LABOUR PRODUCTIVITY ===
+    # LABOUR PRODUCTIVITY
     labour_raw_path = "../data/raw/labour_productivity_raw.csv"
     labour_output_path = "../data/clean/ilostat_labour_productivity_clean.csv"
     labour_df = pd.read_csv(labour_raw_path)
@@ -235,7 +235,7 @@ def main():
     print(labour_cleaned.head())
     print(f"Labour productivity cleaned file saved to {labour_output_path}")
 
-    # === SAFETY AND HEALTH ===
+    #  SAFETY AND HEALTH
     safety_raw_path = "../data/raw/safety_and_health_at_work_raw.csv"
     safety_output_path = "../data/clean/ilostat_safety_and_health_clean.csv"
     safety_df = pd.read_csv(safety_raw_path)
@@ -245,7 +245,7 @@ def main():
     print(safety_cleaned.head())
     print(f"Safety and health cleaned file saved to {safety_output_path}")
 
-    # === WAGES ===
+    #  WAGES
     wages_raw_path = "../data/raw/wages_raw.csv"
     wages_output_path = "../data/clean/ilostat_wages_clean.csv"
     wages_df = pd.read_csv(wages_raw_path)
@@ -255,7 +255,7 @@ def main():
     print(wages_cleaned.head())
     print(f"Wages cleaned file saved to {wages_output_path}")
 
-    # === WORKING POVERTY ===
+    #  WORKING POVERTY
     poverty_raw_path = "../data/raw/working_poverty_raw.csv"
     poverty_output_path = "../data/clean/ilostat_working_poverty_clean.csv"
     poverty_df = pd.read_csv(poverty_raw_path)
@@ -265,7 +265,7 @@ def main():
     print(poverty_cleaned.head())
     print(f"Working poverty cleaned file saved to {poverty_output_path}")
 
-    # === WORKING TIME ===
+    #  WORKING TIME
     working_time_raw_path = "../data/raw/working_time_raw.csv"
     working_time_output_path = "../data/clean/ilostat_working_time_cleaned.csv"
     working_time_df = pd.read_csv(working_time_raw_path)
@@ -275,7 +275,7 @@ def main():
     print(working_time_cleaned.head())
     print(f"Working time cleaned file saved to {working_time_output_path}")
 
-    # Clean and save employment data
+    # EMPLOYMENT
     employment_raw_path = "../data/raw/employment_raw.csv"
     employment_output_path = "../data/clean/ilostat_employment_cleaned.csv"
     employment_df = pd.read_csv(employment_raw_path)

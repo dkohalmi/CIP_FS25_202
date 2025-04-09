@@ -1,5 +1,5 @@
 """\
-Scrapes emotional response data from the Gallup Global Emotions interactive map:
+Function to scrape emotional response data from the Gallup Global Emotions interactive map:
 https://news.gallup.com/interactives/248240/global-emotions.aspx
 
 For each emotion, the script:
@@ -16,9 +16,7 @@ date:       21.03.2025
 def scrape_gallup_emotions(save_path: str = "../data/raw/gallup_emotions_raw.csv", headless: bool = True):
     from selenium import webdriver
     from selenium.webdriver.common.by import By
-    from selenium.webdriver.common.action_chains import ActionChains
     from selenium.webdriver.support.ui import WebDriverWait
-    from selenium.webdriver.support import expected_conditions as EC
     from selenium.webdriver.chrome.service import Service as ChromeService
     from webdriver_manager.chrome import ChromeDriverManager
     from bs4 import BeautifulSoup

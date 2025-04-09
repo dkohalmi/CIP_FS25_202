@@ -7,7 +7,7 @@ for use in the clean_gallup_safety file
 Source:
 https://www.gallup.com/analytics/356996/gallup-law-and-order-research-center.aspx
 
-The robots.txt on this website was checked to ensure that information scrapped was allowed.
+The robots.txt on this website was checked to ensure that information extracted was allowed.
 
 authors:    Jade Bullock
 date:       23.03.2025

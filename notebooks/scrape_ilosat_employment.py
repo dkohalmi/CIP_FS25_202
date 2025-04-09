@@ -62,7 +62,7 @@ except Exception as e:
 # Parse the expanded content with BeautifulSoup
 soup = BeautifulSoup(driver.page_source, "html.parser")
 
-# You might need to adjust the selector below after inspecting the actual structure
+# Select information to scrape
 rows = soup.select("table.medium tbody tr")
 
 data = []
@@ -75,7 +75,7 @@ for row in rows:
         value = value_cell.get_text(strip=True)
         data.append((country, value))
 
-# Switch back to main page (optional)
+# Switch back to main page
 driver.switch_to.default_content()
 driver.quit()
 
