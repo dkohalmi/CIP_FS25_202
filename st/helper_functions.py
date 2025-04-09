@@ -175,10 +175,13 @@ def merge_betterlife(df1, df2):
         df2_new = df2.copy()
 
         # Replace "Slovak Republic" with "Slovakia":
-        df1_new["Country"].replace(country_replacements, inplace=True)
+        #df1_new["Country"].replace(country_replacements, inplace=True)
+        df1_new["Country"] = df1_new["Country"].replace(country_replacements)
 
         # Replace "Republic of Korea" with "Korea":
-        df2_new["Country name"].replace(country_replacements, inplace=True)
+        #df2_new["Country name"].replace(country_replacements, inplace=True)
+        df2_new["Country name"] = df2_new["Country name"].replace(country_replacements)
+
 
         # Left-merge Better Life Index dataframe and Happiness Index dataframe:
         df_merged = df1_new.merge(df2_new, left_on='Country', right_on='Country name',
