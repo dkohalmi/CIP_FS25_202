@@ -88,7 +88,7 @@ def prepare_betterlife(df):
     Clean and transform the raw Better Life Index dataset.
     
     Parameters: 
-       df (pandas DataFrame): Raw Better Life data)
+       df (pandas DataFrame): Raw Better Life data
 
     Output: 
        pandas DataFrame: clean and transformed Better Life data (Inequality columns removed)
@@ -101,6 +101,17 @@ def prepare_betterlife(df):
         
         # Drop all Inequality columns:
         df_new.drop(columns=inequality_columnnames, inplace=True)
+        
+        # Population data for Costa Rica and Lithuania
+        correct_population_costa_rica = 5.1
+        correct_population_lithuania = 2.9
+
+        # Replace missing value in Population column for Costa Rica:
+        df_new.loc[df_new['Country'] == 'Costa Rica', 'Population'] = correct_population_costa_rica
+
+        # Replace missing value in Population column for Lithuania
+        df_new.loc[df_new['Country'] == 'Lithuania', 'Population'] = correct_population_lithuania
+
         return df_new
    
     except KeyError as e:
