@@ -43,8 +43,8 @@ def emotions_page():
 
         To answer these questions, we draw on data from:
 
-        - **The [Gallup Global Emotions Survey](https://news.gallup.com/interactives/248240/global-emotions.aspx):**: A worldwide measure of how people **actually feel** on a day-to-day basis — capturing responses about enjoyment, sadness, worry, stress, anger, respect, and more.
-        - **The [World Happiness Index](https://worldhappiness.report/ed/2025/#appendices-and-data):**: An annual index that ranks countries based on **life satisfaction**, built from both emotional and structural factors.
+        - **The [Gallup Global Emotions Survey](https://news.gallup.com/interactives/248240/global-emotions.aspx):** A worldwide measure of how people **actually feel** on a day-to-day basis — capturing responses about enjoyment, sadness, worry, stress, anger, respect, and more.
+        - **The [World Happiness Index](https://worldhappiness.report/ed/2025/#appendices-and-data):** An annual index that ranks countries based on **life satisfaction**, built from both emotional and structural factors.
 
 
 
