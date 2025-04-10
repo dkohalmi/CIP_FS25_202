@@ -1,5 +1,5 @@
 """
-Analysis and Visualization: World Happiness Report 2024
+Analysis and Visualization: World Happiness Report 2024 (WHR2024)
 scraped data from cleaned csv: ./data/clean/world_happiness_report_2024_clean.csv
 
 author: Ramona Kölliker
@@ -112,6 +112,13 @@ Outliers in South Asia region:
 Outliers in East Asia region:
                       Country     Region  Average Life Evaluation
 143  Taiwan Province of China  East Asia                    6.669
+
+Regarding outliers we need to keep in mind that we don`t have data for 17 countries. They are listed in the WHR2024 but 
+no data is available. The 17 Countries: Angola, Belarus, Bhutan, Burundi, Central African Republic, Cuba, Djibouti, 
+Guyana, Haiti, Maldives, Qatar, Rwanda, South Sudan, Sudan, Suriname, Syria, Turkmenistan. Some of these countries are 
+currently facing severe political and social unrest or wars which make data gathering impossible. 
+Other reasons for not providing any data could be governmental restrictions or lack of infrastructure. All possible 
+reasons for low happiness scores which could potentially lead to more outliers.
 """
 
 ## Which factors have the biggest impact on happiness?
@@ -182,7 +189,6 @@ if len(axes) > len(key_variables):
 plt.tight_layout()
 # save plot
 plt.savefig("visuals/WHR2024_linreg_plots.png", dpi=300, bbox_inches = "tight")
-
 plt.show()
 
 ## linear model fit
@@ -299,6 +305,9 @@ plt.tight_layout()
 plt.savefig("visuals/WHR2024_stacked_barplot_contribution.png", dpi = 300, bbox_inches = "tight")
 plt.show()
 
+# Upon visual examination of the plot, it appears that there are differences between the regions.
+# Are these differences statistically significant?
+
 # Anova to check if differences between Regions are sign.
 import statsmodels.api as sm
 from statsmodels.formula.api import ols
@@ -327,17 +336,34 @@ for factor in factors:
     anova_table = sm.stats.anova_lm(model, typ = 2)
     print(anova_table)
 
-# ANOVA: there are sign. diff. between regions and their contributions of factors.
+# ANOVA: there are sign. diff. between regions and their contributions of factors to happiness
     # Post-hoc analysis: Tukey HSD. Do pairwise comparison to see if/which regions differ in which factor
     tukey = pairwise_tukeyhsd(df_explain_fact[factor], df_explain_fact["Region"])
     print(f"Tukey HSD Results for {factor}:")
     print(tukey.summary())
 
 """
-GDP and social support are strong contributors in every region, social support lower contribution in South Asia
-Healthy life expectancy stands out in East Asia and North America.
-Generosity and corruption perception have smaller impacts across the board but still vary by region.
-Regions like South Asia and Southeast Asia show a greater role for freedom compared to the other regions.
+GDP and social support are strong contributors in every region. Social support strongest in: Central and Eastern Europe,
+Commonwealth of Independent States and Middle East and North Africa. Weakest contribution in South Asia.
+For GDP: strongest contribution in South Asia, East Asia and Middle East and North Africa.
+Healthy life expectancy stands out in East Asia and Western Europe. 
+
+Post-hoc TukeyS HSD reveals that there are sign. differences between regions for the contribution to happiness for the 
+following factors: Social support, GDP per capita, Healthy life expectancy, Generosity and Perceptions of corruption.
+There is no difference between the regions for the factor freedom.
+
+                                           Social support Explains  GDP per capita Explains  Healthy life expectancy Explains  Freedom Explains  Generosity Explains  Perceptions of corruption Explains
+Region                                                                                                                                                                                                  
+Central and Eastern Europe                               25.811765                25.205882                          9.982353         12.388235             1.523529                            1.423529
+Commonwealth of Independent States                       26.200000                23.850000                         10.540000         13.320000             1.920000                            2.550000
+East Asia                                                24.816667                26.900000                         13.333333         11.783333             1.550000                            3.150000
+Latin America and the Caribbean                          23.642857                20.461905                          8.600000         13.519048             1.247619                            1.595238
+Middle East and North Africa                             25.644444                26.450000                         10.755556         12.116667             1.727778                            2.411111
+North America, Australia, and New Zealand                24.100000                25.700000                         11.250000         11.575000             2.450000                            4.350000
+South Asia                                               16.550000                28.983333                         11.000000         14.683333             3.416667                            3.266667
+Southeast Asia                                           23.955556                23.377778                          9.533333         16.188889             3.322222                            2.711111
+Sub-Saharan Africa                                       22.266667                20.275000                          6.872222         15.058333             2.841667                            2.647222
+Western Europe                                           23.870000                26.300000                         12.305000         12.220000             1.985000                            4.035000
 """
 ## How does GDP influence happiness?
 # scatter plot of GDP vs Happiness Score
@@ -364,8 +390,7 @@ plt.show()
 
 """
 in general there is a pos. correlation: higher GDP higher happiness score. 
-But there are some richer countries with moderate happiness scores and some very poor countries 
-with moderate scoring.
+But there are some richer countries with moderate happiness scores and some very poor countries with moderate scoring.
 clusters: from visual inspection around 3 clusters, but not clearly seperated.
 western europe at the top right
 sub-saharan in lower-left
@@ -529,7 +554,7 @@ plt.savefig("visuals/WHR2024_trend_changes_happiness2020-2024.png", dpi = 300, b
 plt.show()
 
 """
-countries with biggest changes: 'Viet Nam' 'Venezuela' 'Algeria' 'Mexico' 'China' 'Lithuania' 'Malaysia' 'India' 
+countries with biggest changes from 2020 to 2024: 'Viet Nam' 'Venezuela' 'Algeria' 'Mexico' 'China' 'Lithuania' 'Malaysia' 'India' 
 'Serbia' 'Kuwait' 'Paraguay' 'Georgia' 'Poland' 'Russian Federation' 'Argentina' 'El Salvador' 'Romania' 'Libya'
-'North Macedonia' 'Mozambique'. From 2020 to 2024 every country improved in their Happiness Score 
+'North Macedonia' 'Mozambique'. From 2020 to 2024 every country improved in their Happiness Scores
 """
