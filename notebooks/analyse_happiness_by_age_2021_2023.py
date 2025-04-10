@@ -38,7 +38,7 @@ plt.xticks(rotation = 45, ha = "right") # rotates x-axis labels for readability
 plt.ylabel("in Number of Countries")
 plt.grid(axis = "y")
 plt.tight_layout()
-plt.savefig("age_happiest_counts_barplot.png")
+# save plot
 plt.savefig("visuals/age_happiest_counts_barplot.png", dpi = 300, bbox_inches = "tight")
 plt.show()
 
@@ -54,7 +54,7 @@ plt.xticks(rotation = 45, ha = "right")
 plt.ylabel("in Number of Countries")
 plt.grid(axis = "y")
 plt.tight_layout()
-plt.savefig("age_least_happy_counts_barplot.png")
+# save plot
 plt.savefig("visuals/age_least_happy_counts_barplot.png", dpi = 300, bbox_inches = "tight")
 plt.show()
 
@@ -100,7 +100,7 @@ plt.xlabel("Happiness Rank Difference: Young - Old")
 plt.title("Countries with Happiness Rank Differences between Young and Old (±30 Threshold)")
 plt.legend()
 plt.tight_layout()
-plt.savefig("age_happiness_difference_hbarplot.png")
+# save plot
 plt.savefig("visuals/age_happiness_difference_hbarplot.png", dpi = 300, bbox_inches = "tight")
 plt.show()
 
