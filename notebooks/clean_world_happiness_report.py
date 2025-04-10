@@ -1,5 +1,5 @@
 """
-Data Transformation / Cleansing: World Happiness Report
+Data Transformation / Cleansing: World Happiness Report 2024
 scraped data from website https://data.worldhappiness.report/map
 raw csv: ./data/raw/world_happiness_report_raw.csv
 clean csv: ./data/clean/world_happiness_report_2024_clean.csv
@@ -9,35 +9,35 @@ date: 02.04.2025
 """
 ##
 import pandas as pd
-import numpy as np
 
 ## Missing Data Check
-# Read raw data, making sure pandas treats different "N/A" as missing values
+# read raw data, making sure pandas treats different "N/A" as missing values
 df_raw_world_happiness = pd.read_csv("./data/raw/world_happiness_report_raw.csv", na_values= ["N/A", "-", "nan", "NaN"])
+
 # inspect raw data
 df_raw_world_happiness
 # check column names:
 df_raw_world_happiness.columns
-# information about missing values and data type of the columns:
+# information about missing values and data type of the columns
 df_raw_world_happiness.info()
 
 # exploring the missing data
 df_raw_world_happiness.isnull().sum()
 print("Total number of missing values per column: ", df_raw_world_happiness.isnull().sum())
-# "Country" is the only column without missing values.
-# "Healthy life expectancy Rank" and "Healthy life expectancy Value" have missing values for all 164 entries.
+# "Country" is the only column without missing values
+# "Healthy life expectancy Rank" and "Healthy life expectancy Value" have missing values for all 164 entries
 
 # we exclude these two empty columns for the further data exploration
 cols_to_exclude = ["Healthy life expectancy Rank", "Healthy life expectancy Value"]
 
-# Rows with at least one missing value
-df_raw_world_happiness.drop(columns= cols_to_exclude).isnull().any(axis=1)
-print("Total number of rows with missing values: ", df_raw_world_happiness.drop(columns= cols_to_exclude).isnull().any(axis=1).sum())
+# rows with at least one missing value
+df_raw_world_happiness.drop(columns = cols_to_exclude).isnull().any(axis = 1)
+print("Total number of rows with missing values: ", df_raw_world_happiness.drop(columns = cols_to_exclude).isnull().any(axis = 1).sum())
 # we have 40 rows with missing values
 
 # check if we have complete empty rows, no data at all for a country
-df_raw_world_happiness.drop(columns= ["Country"]).isnull().all(axis=1)
-countries_without_data = df_raw_world_happiness[df_raw_world_happiness.drop(columns= ["Country"]).isnull().all(axis=1)]
+#df_raw_world_happiness.drop(columns = ["Country"]).isnull().all(axis = 1)
+countries_without_data = df_raw_world_happiness[df_raw_world_happiness.drop(columns = ["Country"]).isnull().all(axis = 1)]
 print("Total number of countries without data: ", len(countries_without_data)) #17 countries without data
 print(countries_without_data["Country"])
 
@@ -46,53 +46,55 @@ print(df_raw_world_happiness["Country"].unique())
 print("Number of unique values in this column: ", df_raw_world_happiness["Country"].nunique())
 print("Length of data frame: ", len(df_raw_world_happiness))
 
-# conclusions: column "Country" is unique and complete, we have 17 countries without data,
-# we have 40 rows with at least one missing value and columns "Healthy life expectancy Rank" and
-# "Healthy life expectancy Value" have missing values for all 164 entries.
-
+"""
+conclusions: column "Country" is unique and complete, we have 17 countries without data.
+We have 40 rows with at least one missing value
+The columns "Healthy life expectancy Rank" and "Healthy life expectancy Value" have missing values for all 164 entries.
+"""
 ## Cleaning
 # fix column types: converting "objects" (strings) to "float"
 # select object columns
-object_cols = df_raw_world_happiness.select_dtypes(include= "object")
+object_cols = df_raw_world_happiness.select_dtypes(include = "object")
 print("Object columns: ", object_cols.columns)
 
-# we want to clean and convert all "object" columns of the dataframe except for "Country":
-# select "object" (string) columns except for "Country" column:
+# we want to clean and convert all "object" columns of the dataframe except for "Country"
+# select "object" (string) columns
 cols_to_convert = [col for col in object_cols if col != "Country"]
 print("Columns to convert; ", cols_to_convert)
 
 # deep copy of the original dataframe to preserve the raw data
 df_clean = df_raw_world_happiness.copy()
 
-# functino to clean and convert mixed-format strings (objects) to float
+# function to clean and convert mixed-format strings (objects) to float
 def clean_mixed_column(col):
     return pd.to_numeric(
         col.astype(str)
-           .str.replace("%", "", regex=False)
-           .str.replace("$", "", regex=False)
-           .str.replace(",", "", regex=False)
-           .str.replace("-", "", regex=False)
+           .str.replace("%", "", regex = False)
+           .str.replace("$", "", regex = False)
+           .str.replace(",", "", regex = False)
+           .str.replace("-", "", regex = False)
            .str.strip(),
         errors= "coerce" #N/A
     )
+
 # apply cleaning function to each selected column
 for col in cols_to_convert:
-    df_clean[col] = clean_mixed_column(df_raw_world_happiness[col])
+    df_clean[col] = clean_mixed_column(df_clean[col])
 
 # check data type of cleaned dataframe
 df_clean.info()
 
 # since the columns "Healthy life expectancy Rank" and "Healthy life expectancy Value"
-# have no data for all 164 entries/countries, we drop them
+# have no data for all 164 entries = countries, we drop them
 cols_to_exclude = ["Healthy life expectancy Rank", "Healthy life expectancy Value"]
-df_clean.drop(columns= cols_to_exclude, inplace= True)
+df_clean.drop(columns = cols_to_exclude, inplace = True)
 
 df_clean.head()
 
 ## Adding one column
 # add one column of helpful additional information: creating another column "Region". The regions are according
 # to the World Happiness Report MAP-Dashboard on https://data.worldhappiness.report/map
-# the assignment of every country to one region was made by ChatGPT 4o
+# the assignment of every country to one region was made by ChatGPT 4o and then cross-checked with the dashboard
 region_dict = {
     # Western Europe
     "Austria": "Western Europe", "Belgium": "Western Europe", "Denmark": "Western Europe",
@@ -182,10 +184,13 @@ region_dict = {
     "New Zealand": "North America, Australia, and New Zealand", "United States": "North America, Australia, and New Zealand"
 }
 
+# map country names to the corresponding region
 df_clean["Region"] = df_clean["Country"].map(region_dict)
+
 # check for missing assignments
 missing_regions = df_clean[df_clean["Region"].isnull()]["Country"].unique()
 print("Countries with missing region assignment:", missing_regions)
+
 # adding the missed countries to the dict
 region_dict.update({
     "Cyprus": "Western Europe",
@@ -197,6 +202,7 @@ region_dict.update({
     "Türkiye": "Middle East and North Africa",
     "Viet Nam": "Southeast Asia"
 })
+
 # re-do the region mapping
 df_clean["Region"] = df_clean["Country"].map(region_dict)
 missing_regions = df_clean[df_clean["Region"].isnull()]["Country"].unique()
@@ -204,14 +210,15 @@ print("Countries with missing region assignment:", missing_regions)
 
 df_clean.info()
 
-## Save dataframe to csv
-# save into the /data/clean folder as world_happiness_report_clean.csv:
-df_clean.to_csv("./data/clean/world_happiness_report_2024_clean.csv", index= False)
-
-## Check if values lie in the expected range
+## Checking expected ranges of values
+# select numerical columns and get a summary statistics
 cols_to_evaluate = [col for col in df_clean.columns if col not in ["Country", "Region"]]
+
 # loop through the columns and print the statistics
 for col in cols_to_evaluate:
     print("Description of column: ", col)
     print(df_clean[col].describe())
 # conclusion: everything seems plausible
+
+## Saving dataframe to csv
+df_clean.to_csv("./data/clean/world_happiness_report_2024_clean.csv", index = False)
