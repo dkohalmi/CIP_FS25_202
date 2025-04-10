@@ -14,11 +14,11 @@ import seaborn as sns
 # load data (scraped and cleaned)
 df_WHR2024 = pd.read_csv("./data/clean/world_happiness_report_2024_clean.csv")
 """
-In this dataset Countries are ranked based on their citizens’ average responses to a life evaluation (here also referred to 
-as Happiness Score) question  — imagining life as a ladder from 0 (worst) to 10 (best). Rankings are averaged over the 
-past three years. Each country's score is explained using six explanatory variables. For each variable, three values are 
-shown -> Rank: The country's rank on that factor, Value: The current value of the factor, Explains: How much that factor 
-contributes to the overall happiness score
+In this dataset Countries are ranked based on their citizens` responses to a life evaluation question (from the Gallup 
+World Poll): imagining life as a ladder from 0 (worst) to 10 (best). Rankings are averaged over the preceded three years. 
+Each country's score is explained using six explanatory variables. For each variable, three values are shown -> 
+Rank: The country's rank on that factor, Value: The current value of the factor, Explains: How much that factor 
+contributes to the averaged life evaluation (here also referred to as Happiness Score) 
 """
 
 ## exploring df_WHR2024

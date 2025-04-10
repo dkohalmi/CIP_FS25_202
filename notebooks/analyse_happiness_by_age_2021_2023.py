@@ -12,9 +12,8 @@ import matplotlib.pyplot as plt
 ## load data
 df_happiness_by_age = pd.read_csv("./data/clean/happiness_by_age_2021_2023_clean.csv")
 """
-scraped data about happiness during different life stages. For each country there is a ranking of 
-life evaluations for the whole population (in the first column) and then four age groups:
-under 30, 30-44, 45-59, and 60+.
+scraped data about happiness during different life stages. For each country there is a ranking of life evaluations for 
+the whole population (All Ages) and then divided in four age groups: under 30, 30-44, 45-59, and 60+.
 Countries are ranked according to their self-assessed life evaluations (answers to the Cantril ladder question in the 
 Gallup World Poll), averaged over the years 2021-2023.
 """
