@@ -1,7 +1,47 @@
 # CIP_FS25_202
-Happiness around the World Project
+# Happiness around the World Project
 
 What Drives Happiness? A Comparative Analysis Using Betterlife, Gallup, ILOSTAT & World Happiness Data
+
+### Authors: Jade Bullock, Ramona Kölliker, Dora Köhalmi
+------
+### Contributions:
+
+__Jade Bullock__:
+  - /notebooks/analyse_illostat.py
+  - /notebooks/analyse_gallup.py
+  - /notebooks/scrape_gallup_emotions.py
+  - /notebooks/scrape_gallup_safety.py
+  - /notebooks/scrape_ilostat_employment.py
+  - /notebooks/scrape_ilostat_all.py
+  - /notebooks/clean_gallup_emotions.py
+  - /notebooks/clean_gallup_safety.py
+  - /notebooks/clean_ilostat_all.py
+  - /notebooks/merge_clean_ilostat_gallup.py
+  - /st/pages/Emotions.py
+
+__Ramona Kölliker__:
+  - /notebooks/analyse_happiness_by_age.py
+  - /notebooks/analyse_world_happiness_report.py
+  - /notebooks/clean_happiness_by_age.py
+  - /notebooks/clean_world_happiness_report.py
+  - /notebooks/merge_WHR2024_happinessindex.py
+  - /notebooks/scrape_happiness_by_age.py
+  - /notebooks/scrape_world_happiness_report.py
+
+__Dora Köhalmi__:
+  - /src/clean.betterlife.py
+  - /src/scrape.betterlifeindex.py
+  - /notebooks/scrape.betterlifeindex.ipynb
+  - /notebooks/clean.betterlife.ipynb
+  - /notebooks/analyse_betterlife.ipynb
+  - /st/streamlit_app.py
+  - /st/helper_functions.py
+  - /st/utils/plotting_betterlife.py
+  - /st/pages/Better_Life.py
+  - /st/pages/Happiness.py 
+
+----
 
 # Project Description
 
@@ -34,9 +74,10 @@ We scraped open data from:
 
 
 - Better Life
+  - https://www.oecdbetterlifeindex.org/
 
 We scraped, collected, cleaned, and merged these datasets, then applied visual analytics as well as statistical and 
-machine learning methods to evaluate which indicators most strongly relate to happiness.
+machine learning methods to evaluate which indicators most strongly relate to happiness. To show our results we created a Streamlit Application.
 
 # Key Objectives
 Understand which social and economic indicators predict happiness:
@@ -52,11 +93,15 @@ Understand which social and economic indicators predict happiness:
     - visualisation, correlation analysis, linear regression, and random forest models
     
   - Visualize results and evaluate model performance
+  - Create a Streamlit Application to enable the user to explore the data we collected
     
-Rank top predictors of happiness
+  - Rank top predictors of happiness
 
 
 # Folder Structure
+
+Storing our small, collected data files directly in the GitHub repository, while generally discouraged for larger datasets, was a deliberate decision. This ensures the long-term functionality of our analysis, visualization, and modeling code, as well as the Streamlit application. Given the potential for website changes to break our scraping code, having the data directly accessible within the repository guarantees reproducibility even if the original sources become unavailable.
+
 <pre> ```CIP_FS25_GXX/
 │
 ├── data/
@@ -65,10 +110,20 @@ Rank top predictors of happiness
 │   
 │
 ├── notebooks/
-│   ├── clean_scripts.py    # Data cleaning for each source
-│   ├── merge_datasets.py   # Merging and harmonizing datasets
-│   ├── analysis.py         # Correlation, regression, random forest
+│   ├── scrape_...          # Scrape Data from each source
+│   ├── clean_...           # Data cleaning for each source
+│   ├── merge_...           # Merging and harmonizing datasets
+│   ├── analyse_...         # Correlation, regression, random forest
 │   └── visuals/            # Optional saved plots and figures
+│
+├── src/                    # Python scripts
+│
+├── st/
+│   ├── streamlit_app.py     # Main Streamlit file 
+│   ├── pages/               # Streamlit pages files
+│   ├── helper_functions.py  # Helper functions to load and clean data
+│   ├── utils/               # Functions for the page (Plotting functions for Better_Life Page)
+│   
 │
 ├── report/
 │   ├── CIP_Final_Report.pdf    # Final project write-up
@@ -81,16 +136,34 @@ Rank top predictors of happiness
 
 
 # Packages used
-- Python 3.11+
-- pandas
 - numpy
-- matplotlib, seaborn
+- pandas
+- selenium
+- beautifulsoup4
+- webdriver-manager
+- matplotlib
+- seaborn
+- plotly
+- streamlit
+- tqdm
+- openpyxl
 - scikit-learn
-- Selenium + BeautifulSoup
-- openpyxl 
+- requests
+- python-kaleido
+
 
 # Key Insights
-.....
+
+Our analysis shows that while income and economy matter, they aren't everything. Once a country reaches a certain income level, extra money doesn't lead to big gains in happiness. Instead, social support, emotional well-being, and personal freedom take center stage.
+
+We also saw that emotions and safety perceptions strongly relate to happiness. Feeling safe and supported can often mean more to people than material wealth. 
+
+Age-based analysis revealed that younger people tend to report higher life satisfaction than older adults. In many countries, this generational gap is wide—sometimes exceeding 30 ranking points—highlighting important demographic dynamics in well-being. One contributing factor may be the increased experience of physical pain among older adults, as reflected in our Gallup Emotions data. Pain was one of the strongest emotional correlations of unhappiness, and its prevalence rises with age due to chronic health conditions and declining mobility. This connection highlights how both physical and emotional health contribute to the drop in happiness often observed later in life.
+
+Importantly, the OECD Better Life Index data added a complementary perspective. Happiness scores were strongly correlated with Environment, Jobs, and Health—three key areas not directly covered in the WHR regression model. Income, Housing, and Community also showed notable positive correlations, whereas Work-Life Balance had a surprisingly weak association. These findings suggest that economic stability alone isn't enough—people also need clean environments, decent work, and good health to thrive. 
+
+These findings reinforce the idea that happiness is not determined by any single factor, but instead emerges from the complex interaction of emotional experiences, socioeconomic conditions, physical health, and environmental quality. By bringing together diverse datasets—from Gallup’s emotional and safety metrics to ILO labor indicators and the OECD Better Life Index—we were able to explore happiness through multiple lenses. Importantly, the inclusion of both subjective perceptions and objective conditions revealed that neither emotional well-being nor economic prosperity alone can fully explain global variations in happiness. This multidimensional approach offers a more holistic understanding of what shapes people’s lives and where policy efforts might most effectively be focused to support well-being across populations.
+
 
 # How to Reproduce
 - Clone the repo
@@ -108,18 +181,19 @@ Rank top predictors of happiness
   pip install -r requirements.txt  </pre>
 
 
-- Run scripts from notebooks or command line:
-  - clean_scripts.py → cleans all source datasets
-  - merge_datasets.py → merges + adds happiness index
-  - analysis.py → regression, random forest, and plots
+- File names: 
+  - scrape_..   → scrapes data
+  - clean_ ...  → cleans  datasets
+  - merge_....  → merges + adds happiness index
+  - analyse.... → regression, random forest, and plots
 
 #Team Contributions
 
 
-| Name            | GitHub Name | Data Sources Scraped, Cleaned, and Analyzed |
-|-----------------|-------------|---------------------------------------------|
-| Jade Bullock    | jbull999    | Gallup Global, ILOSTAT                      |
-| Dora            |             |                                             |
+| Name            | GitHub Name | Data Sources Scraped, Cleaned, and Analyzed |Streamlit App
+|-----------------|-------------|---------------------------------------------|-----------------
+| Jade Bullock    | jbull999    | Gallup Global, ILOSTAT                      |st/pages/Emotions.py
+| Dora Köhalmi    | dkohalmi    | Better Life Index                           |st/streamlit_app.py, st/helper_functions, st/pages/Better_Life.py
 | Ramona Kölliker | Ra-Mona09   | World Happiness Report, Happiness by Age    |
 
 
