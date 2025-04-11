@@ -8,8 +8,8 @@ What Drives Happiness? A Comparative Analysis Using Betterlife, Gallup, ILOSTAT 
 ### Contributions:
 
 __Jade Bullock__:
-  - /notebooks/analyse_illostat.py
-  - /notebooks/analyse_gallup.py
+  - /notebooks/analyse_illostat.ipynb
+  - /notebooks/analyse_gallup.ipynb
   - /notebooks/scrape_gallup_emotions.py
   - /notebooks/scrape_gallup_safety.py
   - /notebooks/scrape_ilostat_employment.py
@@ -17,12 +17,12 @@ __Jade Bullock__:
   - /notebooks/clean_gallup_emotions.py
   - /notebooks/clean_gallup_safety.py
   - /notebooks/clean_ilostat_all.py
-  - /notebooks/merge_clean_ilostat_gallup.py
+  - /notebooks/merge_cleaned_ilostat_gallup.py
   - /st/pages/Emotions.py
 
 __Ramona Kölliker__:
-  - /notebooks/analyse_happiness_by_age.py
-  - /notebooks/analyse_world_happiness_report.py
+  - /notebooks/analyse_happiness_by_age_2021_2023.py
+  - /notebooks/analyse_world_happiness_report_2024.py
   - /notebooks/clean_happiness_by_age.py
   - /notebooks/clean_world_happiness_report.py
   - /notebooks/merge_WHR2024_happinessindex.py
